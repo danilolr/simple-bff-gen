@@ -1,0 +1,774 @@
+{
+    "openapi": "3.0.0",
+    "paths": {
+        "/message/api/v1/version": {
+            "get": {
+                "operationId": "AppController_getVersion",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Server version",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "version"
+                ]
+            }
+        },
+        "/message/api/v1/message/send/text": {
+            "post": {
+                "operationId": "AppController_sendMessage",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SendTextMessageRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Returns message send result",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SendMessageResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "message"
+                ]
+            }
+        },
+        "/message/api/v1/message/send/document": {
+            "post": {
+                "operationId": "AppController_sendMessageDocument",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SendMediaMessageRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Returns message send result",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SendMessageResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "message"
+                ]
+            }
+        },
+        "/message/api/v1/device/byCustomerRef/{ref}": {
+            "get": {
+                "operationId": "DeviceController_findAll",
+                "parameters": [
+                    {
+                        "name": "ref",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List devices",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Device"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "device"
+                ]
+            }
+        },
+        "/message/api/v1/device/status/{device_ref}": {
+            "get": {
+                "operationId": "DeviceController_deviceStatus",
+                "parameters": [
+                    {
+                        "name": "device_ref",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "returns whatsapp qrcode",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DeviceStatus"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "device"
+                ]
+            }
+        },
+        "/message/api/v1/device": {
+            "post": {
+                "operationId": "DeviceController_insert",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DeviceDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Insert result",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OperationInsertResult"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "device"
+                ]
+            }
+        },
+        "/message/api/v1/device/update": {
+            "put": {
+                "operationId": "DeviceController_updateDevice",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateDeviceDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Update Result",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OperationResult"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "device"
+                ]
+            }
+        },
+        "/message/api/v1/device/{device_ref}": {
+            "delete": {
+                "operationId": "DeviceController_delete",
+                "parameters": [
+                    {
+                        "name": "device_ref",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Delete result",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OperationResult"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "device"
+                ]
+            }
+        },
+        "/message/api/v1/customer": {
+            "get": {
+                "operationId": "CustomerController_findByCliente",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "List customers",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Customer"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "customer"
+                ]
+            },
+            "post": {
+                "operationId": "CustomerController_insert",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CustomerDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Insert result",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OperationInsertResult"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "customer"
+                ]
+            }
+        },
+        "/message/api/v1/customer/{id}": {
+            "put": {
+                "operationId": "CustomerController_update",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CustomerDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Resultado atualização",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OperationResult"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "customer"
+                ]
+            },
+            "delete": {
+                "operationId": "CustomerController_delete",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Resultado exclusão",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OperationResult"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "customer"
+                ]
+            }
+        },
+        "/message/api/v1/ws-chat/callback": {
+            "post": {
+                "operationId": "PageChatController_wsCallback",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/WsCallbackDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Callback result",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OperationResult"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "ws-chat"
+                ]
+            }
+        },
+        "/message/api/v1/whatsapp-meta/auth/{hubMode}/{hubChallenge}/{hubVerifyToken}": {
+            "get": {
+                "operationId": "WhatsappMetaController_waCallbackGet",
+                "parameters": [
+                    {
+                        "name": "hubMode",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "hubChallenge",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "hubVerifyToken",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Callback result"
+                    }
+                },
+                "tags": [
+                    "whatsapp-meta"
+                ]
+            }
+        },
+        "/message/api/v1/whatsapp-meta/webhook": {
+            "get": {
+                "operationId": "WhatsappMetaController_waCallbackGetMeta",
+                "parameters": [
+                    {
+                        "name": "hub.mode",
+                        "required": true,
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "hub.challenge",
+                        "required": true,
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "hub.verify_token",
+                        "required": true,
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Callback result"
+                    }
+                },
+                "tags": [
+                    "whatsapp-meta"
+                ]
+            },
+            "post": {
+                "operationId": "WhatsappMetaController_waCallbackPost",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Callback result",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OperationResult"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "whatsapp-meta"
+                ]
+            }
+        }
+    },
+    "info": {
+        "title": "Message API",
+        "description": "Message API description",
+        "version": "0.0.86",
+        "contact": {}
+    },
+    "tags": [],
+    "servers": [],
+    "components": {
+        "schemas": {
+            "SendTextMessageRequest": {
+                "type": "object",
+                "properties": {
+                    "phone": {
+                        "type": "string"
+                    },
+                    "text": {
+                        "type": "string"
+                    },
+                    "deviceRef": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "phone",
+                    "text",
+                    "deviceRef"
+                ]
+            },
+            "SendMessageResponse": {
+                "type": "object",
+                "properties": {
+                    "ok": {
+                        "type": "boolean"
+                    },
+                    "messageId": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "ok",
+                    "messageId"
+                ]
+            },
+            "SendMediaMessageRequest": {
+                "type": "object",
+                "properties": {
+                    "phone": {
+                        "type": "string"
+                    },
+                    "text": {
+                        "type": "string"
+                    },
+                    "deviceRef": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string"
+                    },
+                    "hash": {
+                        "type": "string"
+                    },
+                    "fileName": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "phone",
+                    "text",
+                    "deviceRef",
+                    "type",
+                    "hash",
+                    "fileName"
+                ]
+            },
+            "Customer": {
+                "type": "object",
+                "properties": {
+                    "idCustomer": {
+                        "type": "number"
+                    },
+                    "customerName": {
+                        "type": "string"
+                    },
+                    "reference": {
+                        "type": "string"
+                    },
+                    "active": {
+                        "type": "boolean"
+                    }
+                },
+                "required": [
+                    "idCustomer",
+                    "customerName",
+                    "reference",
+                    "active"
+                ]
+            },
+            "Device": {
+                "type": "object",
+                "properties": {
+                    "idDevice": {
+                        "type": "number"
+                    },
+                    "descDevice": {
+                        "type": "string"
+                    },
+                    "customer": {
+                        "$ref": "#/components/schemas/Customer"
+                    },
+                    "phone": {
+                        "type": "string"
+                    },
+                    "channelType": {
+                        "type": "string"
+                    },
+                    "deviceRef": {
+                        "type": "string"
+                    },
+                    "token": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "active": {
+                        "type": "boolean"
+                    }
+                },
+                "required": [
+                    "idDevice",
+                    "descDevice",
+                    "customer",
+                    "phone",
+                    "channelType",
+                    "deviceRef",
+                    "token",
+                    "active"
+                ]
+            },
+            "DeviceStatus": {
+                "type": "object",
+                "properties": {
+                    "isReady": {
+                        "type": "boolean"
+                    },
+                    "hasQrCode": {
+                        "type": "boolean"
+                    },
+                    "qrCode": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "isReady",
+                    "hasQrCode",
+                    "qrCode"
+                ]
+            },
+            "DeviceDto": {
+                "type": "object",
+                "properties": {
+                    "descDevice": {
+                        "type": "string"
+                    },
+                    "customerRef": {
+                        "type": "string"
+                    },
+                    "phone": {
+                        "type": "string"
+                    },
+                    "channelType": {
+                        "type": "string"
+                    },
+                    "token": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "deviceRef": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "descDevice",
+                    "customerRef",
+                    "phone",
+                    "channelType",
+                    "token",
+                    "deviceRef"
+                ]
+            },
+            "OperationInsertResult": {
+                "type": "object",
+                "properties": {
+                    "ok": {
+                        "type": "boolean"
+                    },
+                    "error": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "number"
+                    }
+                },
+                "required": [
+                    "ok",
+                    "error",
+                    "id"
+                ]
+            },
+            "UpdateDeviceDto": {
+                "type": "object",
+                "properties": {
+                    "deviceRef": {
+                        "type": "string"
+                    },
+                    "descDevice": {
+                        "type": "string"
+                    },
+                    "phone": {
+                        "type": "string"
+                    },
+                    "token": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "deviceRef",
+                    "descDevice",
+                    "phone",
+                    "token"
+                ]
+            },
+            "OperationResult": {
+                "type": "object",
+                "properties": {
+                    "ok": {
+                        "type": "boolean"
+                    },
+                    "erro": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "ok",
+                    "erro"
+                ]
+            },
+            "CustomerDto": {
+                "type": "object",
+                "properties": {
+                    "customerName": {
+                        "type": "string"
+                    },
+                    "reference": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "customerName",
+                    "reference"
+                ]
+            },
+            "WsCallbackDto": {
+                "type": "object",
+                "properties": {
+                    "uuid": {
+                        "type": "string"
+                    },
+                    "messageType": {
+                        "type": "string"
+                    },
+                    "payload": {
+                        "type": "object"
+                    }
+                },
+                "required": [
+                    "uuid",
+                    "messageType",
+                    "payload"
+                ]
+            }
+        }
+    }
+}

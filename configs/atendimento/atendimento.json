@@ -1,0 +1,4500 @@
+{
+    "openapi": "3.0.0",
+    "paths": {
+        "/atendimento/api/v1/versao": {
+            "get": {
+                "operationId": "AppController_getVersao",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Versão API",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "versao"
+                ]
+            }
+        },
+        "/atendimento/api/v1/mensagem/callbacks/{channel_type}/onTextMessage": {
+            "post": {
+                "operationId": "MensagemController_callbackWhatsappOnTextMessage",
+                "parameters": [
+                    {
+                        "name": "channel_type",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CallbackOnTextMessageDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Callback para receber mensagens do whatsapp",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RetornoCallbackMensagem"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "mensagem"
+                ]
+            }
+        },
+        "/atendimento/api/v1/mensagem/callbacks/{channel_type}/onMediaMessage": {
+            "post": {
+                "operationId": "MensagemController_callbackWhatsappOnMediaMessage",
+                "parameters": [
+                    {
+                        "name": "channel_type",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CallbackOnMediaMessageDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Callback para receber mensagens de midia do whatsapp",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RetornoCallbackMensagem"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "mensagem"
+                ]
+            }
+        },
+        "/atendimento/api/v1/mensagem/callbacks/{channel_type}/onStatusUpdate": {
+            "post": {
+                "operationId": "MensagemController_callbackWhatsappStatusUpdate",
+                "parameters": [
+                    {
+                        "name": "channel_type",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CallbackOnStatusUpdateDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Callback para receber mensagens do whatsapp",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RetornoCallbackMensagem"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "mensagem"
+                ]
+            }
+        },
+        "/atendimento/api/v1/cliente": {
+            "get": {
+                "operationId": "ClienteController_findAll",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Lista de clientes",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Cliente"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "cliente"
+                ]
+            }
+        },
+        "/atendimento/api/v1/cliente/insere": {
+            "post": {
+                "operationId": "ClienteController_insere",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ClienteDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Resultado Inserção",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoInsercao"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "cliente"
+                ]
+            }
+        },
+        "/atendimento/api/v1/cliente/insere/onboarding": {
+            "post": {
+                "operationId": "ClienteController_insereOnboarding",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ClienteOnboardingDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Resultado Inserção",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoInsercao"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "cliente"
+                ]
+            }
+        },
+        "/atendimento/api/v1/cliente/{id_cliente}": {
+            "put": {
+                "operationId": "ClienteController_atualiza",
+                "parameters": [
+                    {
+                        "name": "id_cliente",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ClienteDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Resultado atualização",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ResultadoOperacao"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "cliente"
+                ]
+            },
+            "delete": {
+                "operationId": "ClienteController_exclui",
+                "parameters": [
+                    {
+                        "name": "id_cliente",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Resultado exclusão",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoOperacao"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "cliente"
+                ]
+            }
+        },
+        "/atendimento/api/v1/usuarioExterno/byCliente/{id_cliente}": {
+            "get": {
+                "operationId": "UsuarioExternoController_findByCliente",
+                "parameters": [
+                    {
+                        "name": "id_cliente",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de usuarios externos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/UsuarioExterno"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "usuarioExterno"
+                ]
+            }
+        },
+        "/atendimento/api/v1/usuarioExterno/byCliente/{id_cliente}/info": {
+            "get": {
+                "operationId": "UsuarioExternoController_infoByClienteInfo",
+                "parameters": [
+                    {
+                        "name": "id_cliente",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de usuarios externos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/UsuarioExterno"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "usuarioExterno"
+                ]
+            }
+        },
+        "/atendimento/api/v1/usuarioExterno/byReferenciaCliente/{id_cliente}/{referencia}": {
+            "get": {
+                "operationId": "UsuarioExternoController_findByReferencia",
+                "parameters": [
+                    {
+                        "name": "id_cliente",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    },
+                    {
+                        "name": "refCliente",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Usuario externo",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsuarioExterno"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "usuarioExterno"
+                ]
+            }
+        },
+        "/atendimento/api/v1/usuarioExterno/insere": {
+            "post": {
+                "operationId": "UsuarioExternoController_insere",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UsuarioExternoDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Resultado Inserção",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoInsercao"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "usuarioExterno"
+                ]
+            }
+        },
+        "/atendimento/api/v1/usuarioExterno/{id}": {
+            "put": {
+                "operationId": "UsuarioExternoController_atualiza",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UsuarioExternoDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Resultado atualização",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ResultadoOperacao"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "usuarioExterno"
+                ]
+            },
+            "delete": {
+                "operationId": "UsuarioExternoController_exclui",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Resultado exclusão",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoOperacao"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "usuarioExterno"
+                ]
+            }
+        },
+        "/atendimento/api/v1/setor/byCliente/{id_cliente}": {
+            "get": {
+                "operationId": "SetorController_findByCliente",
+                "parameters": [
+                    {
+                        "name": "id_cliente",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de setores",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Setor"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "setor"
+                ]
+            }
+        },
+        "/atendimento/api/v1/setor/insere": {
+            "post": {
+                "operationId": "SetorController_insere",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SetorDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Resultado Inserção",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoInsercao"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "setor"
+                ]
+            }
+        },
+        "/atendimento/api/v1/setor/{id}": {
+            "put": {
+                "operationId": "SetorController_atualiza",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SetorDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Resultado atualização",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoOperacao"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "setor"
+                ]
+            },
+            "delete": {
+                "operationId": "SetorController_exclui",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Resultado exclusão",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoOperacao"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "setor"
+                ]
+            }
+        },
+        "/atendimento/api/v1/menu": {
+            "get": {
+                "operationId": "MenuController_findAll",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Lista de menus",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Menu"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "menu"
+                ]
+            }
+        },
+        "/atendimento/api/v1/menu/insere": {
+            "post": {
+                "operationId": "MenuController_insere",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/MenuDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Resultado Inserção",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoInsercao"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "menu"
+                ]
+            }
+        },
+        "/atendimento/api/v1/menu/{id}": {
+            "put": {
+                "operationId": "MenuController_atualiza",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/MenuDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Resultado atualização",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoOperacao"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "menu"
+                ]
+            },
+            "delete": {
+                "operationId": "MenuController_exclui",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Resultado exclusão",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoOperacao"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "menu"
+                ]
+            }
+        },
+        "/atendimento/api/v1/conselheiro/{id_integracao}/{ref_conselheiro}": {
+            "get": {
+                "operationId": "ConselheiroController_informacaoConselheiro",
+                "parameters": [
+                    {
+                        "name": "id_integracao",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    },
+                    {
+                        "name": "ref_conselheiro",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Callback result",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InformacaoConselheiro"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "conselheiro"
+                ]
+            }
+        },
+        "/atendimento/api/v1/canalComunicacao/byCliente/{id_cliente}": {
+            "get": {
+                "operationId": "CanalComunicacaoController_findByCliente",
+                "parameters": [
+                    {
+                        "name": "id_cliente",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de canal comunicacao",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/CanalComunicacaoInfo"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "canalComunicacao"
+                ]
+            }
+        },
+        "/atendimento/api/v1/canalComunicacao/insere": {
+            "post": {
+                "operationId": "CanalComunicacaoController_insere",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CanalComunicacaoDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Resultado Inserção",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoInsercao"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "canalComunicacao"
+                ]
+            }
+        },
+        "/atendimento/api/v1/canalComunicacao/{id}": {
+            "put": {
+                "operationId": "CanalComunicacaoController_atualiza",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CanalComunicacaoDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Resultado atualização",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoOperacao"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "canalComunicacao"
+                ]
+            },
+            "delete": {
+                "operationId": "CanalComunicacaoController_exclui",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Resultado exclusão",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoOperacao"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "canalComunicacao"
+                ]
+            }
+        },
+        "/atendimento/api/v1/canalComunicacao/integracao/{id}": {
+            "put": {
+                "operationId": "CanalComunicacaoController_atualizaCanalComunicacaoIntegracao",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CanalComunicacaoIntegracaoDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Resultado atualização",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoOperacao"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "canalComunicacao"
+                ]
+            }
+        },
+        "/atendimento/api/v1/canalComunicacao/token/{id}/{token}": {
+            "put": {
+                "operationId": "CanalComunicacaoController_atualizaCanalComunicacaoToken",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    },
+                    {
+                        "name": "token",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Resultado atualização",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoOperacao"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "canalComunicacao"
+                ]
+            }
+        },
+        "/atendimento/api/v1/usuario": {
+            "get": {
+                "operationId": "UsuarioController_findAll",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Lista de usuários",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Usuario"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "usuario"
+                ]
+            }
+        },
+        "/atendimento/api/v1/usuario/byCliente/{id_cliente}": {
+            "get": {
+                "operationId": "UsuarioController_findByCliente",
+                "parameters": [
+                    {
+                        "name": "id_cliente",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de usuários por cliente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Usuario"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "usuario"
+                ]
+            }
+        },
+        "/atendimento/api/v1/usuario/byIdentificador/{identificador}": {
+            "get": {
+                "operationId": "UsuarioController_findByIdentificador",
+                "parameters": [
+                    {
+                        "name": "identificador",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Usuario",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Usuario"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "usuario"
+                ]
+            }
+        },
+        "/atendimento/api/v1/usuario/insere": {
+            "post": {
+                "operationId": "UsuarioController_insere",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UsuarioInsercaoDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Resultado Inserção",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoInsercao"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "usuario"
+                ]
+            }
+        },
+        "/atendimento/api/v1/usuario/{id}": {
+            "put": {
+                "operationId": "UsuarioController_atualiza",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UsuarioDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Resultado atualização",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoOperacao"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "usuario"
+                ]
+            },
+            "delete": {
+                "operationId": "UsuarioController_exclui",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Resultado exclusão",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoOperacao"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "usuario"
+                ]
+            }
+        },
+        "/atendimento/api/v1/role": {
+            "get": {
+                "operationId": "RoleController_findAll",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Lista de roles",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Role"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "role"
+                ]
+            }
+        },
+        "/atendimento/api/v1/role/insere": {
+            "post": {
+                "operationId": "RoleController_insere",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RoleDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Resultado Inserção",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoInsercao"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "role"
+                ]
+            }
+        },
+        "/atendimento/api/v1/role/{id}": {
+            "put": {
+                "operationId": "RoleController_atualiza",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RoleDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Resultado atualização",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoOperacao"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "role"
+                ]
+            },
+            "delete": {
+                "operationId": "RoleController_exclui",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Resultado exclusão",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoOperacao"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "role"
+                ]
+            }
+        },
+        "/atendimento/api/v1/usuarioCliente": {
+            "get": {
+                "operationId": "UsuarioClienteController_findAll",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Lista de usuario/cliente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/UsuarioCliente"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "usuarioCliente"
+                ]
+            }
+        },
+        "/atendimento/api/v1/usuarioCliente/insere": {
+            "post": {
+                "operationId": "UsuarioClienteController_insere",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UsuarioClienteDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Resultado Inserção",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoInsercao"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "usuarioCliente"
+                ]
+            }
+        },
+        "/atendimento/api/v1/usuarioCliente/{id}": {
+            "put": {
+                "operationId": "UsuarioClienteController_atualiza",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UsuarioClienteDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Resultado atualização",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoOperacao"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "usuarioCliente"
+                ]
+            },
+            "delete": {
+                "operationId": "UsuarioClienteController_exclui",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Resultado exclusão",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoOperacao"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "usuarioCliente"
+                ]
+            }
+        },
+        "/atendimento/api/v1/atendimento/{id_cliente}": {
+            "get": {
+                "operationId": "AtendimentoController_findByCliente",
+                "parameters": [
+                    {
+                        "name": "id_cliente",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de atendimentos por cliente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Atendimento"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "atendimento"
+                ]
+            }
+        },
+        "/atendimento/api/v1/atendimento/dashboard/{id_cliente}": {
+            "get": {
+                "operationId": "AtendimentoController_findAtendimentoDashboard",
+                "parameters": [
+                    {
+                        "name": "id_cliente",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de atendimentos por cliente para dashboard",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/AtendimentoDashboardDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "atendimento"
+                ]
+            }
+        },
+        "/atendimento/api/v1/atendimento/{id_atendimento}/mensagens": {
+            "get": {
+                "operationId": "AtendimentoController_findByAtendimento",
+                "parameters": [
+                    {
+                        "name": "id_atendimento",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Obtem atendimento com mensagens",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Atendimento"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "atendimento"
+                ]
+            }
+        },
+        "/atendimento/api/v1/atendimento/{id_atendimento}/info": {
+            "get": {
+                "operationId": "AtendimentoController_informacoesAtendimento",
+                "parameters": [
+                    {
+                        "name": "id_atendimento",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Obtem informações do atendimento",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Atendimento"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "atendimento"
+                ]
+            }
+        },
+        "/atendimento/api/v1/atendimento/byUuid/{uuid}/mensagens": {
+            "get": {
+                "operationId": "AtendimentoController_findByAtendimentoByUuid",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Obtem atendimento com mensagens",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Atendimento"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "atendimento"
+                ]
+            }
+        },
+        "/atendimento/api/v1/atendimento/{id_atendimento}/anteriores": {
+            "get": {
+                "operationId": "AtendimentoController_findAntetriores",
+                "parameters": [
+                    {
+                        "name": "id_atendimento",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Obtem atendimento anteriores com mensagens",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Atendimento"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "atendimento"
+                ]
+            }
+        },
+        "/atendimento/api/v1/atendimento/insere": {
+            "post": {
+                "operationId": "AtendimentoController_insere",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AtendimentoDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Resultado Inserção",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoInsercao"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "atendimento"
+                ]
+            }
+        },
+        "/atendimento/api/v1/atendimento/encerraAtendimento": {
+            "put": {
+                "operationId": "AtendimentoController_encerraAtendimento",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/EncerraAtendimentoDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Resultado encerramento",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoOperacao"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "atendimento"
+                ]
+            }
+        },
+        "/atendimento/api/v1/atendimento/{id}": {
+            "put": {
+                "operationId": "AtendimentoController_atualiza",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AtendimentoDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Resultado atualização",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoOperacao"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "atendimento"
+                ]
+            },
+            "delete": {
+                "operationId": "AtendimentoController_exclui",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Resultado exclusão",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoOperacao"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "atendimento"
+                ]
+            }
+        },
+        "/atendimento/api/v1/atendimento/{id_atendimento}/enviaMensagem/texto": {
+            "post": {
+                "operationId": "AtendimentoController_enviaMensagem",
+                "parameters": [
+                    {
+                        "name": "id_atendimento",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/MensagemDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Envia mensagem de texto do atendente para atendimento",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoOperacao"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "atendimento"
+                ]
+            }
+        },
+        "/atendimento/api/v1/atendimento/{id_atendimento}/pega/{id_usuario}": {
+            "put": {
+                "operationId": "AtendimentoController_pegaAtendimento",
+                "parameters": [
+                    {
+                        "name": "id_atendimento",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    },
+                    {
+                        "name": "id_usuario",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Assume o atendimento",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoOperacao"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "atendimento"
+                ]
+            }
+        },
+        "/atendimento/api/v1/atendimento/pendente/{id_cliente}": {
+            "get": {
+                "operationId": "AtendimentoController_atendimentosPendentes",
+                "parameters": [
+                    {
+                        "name": "id_cliente",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de atendimentos aguardando usuario por cliente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/AtendimentoPendenteDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "atendimento"
+                ]
+            }
+        },
+        "/atendimento/api/v1/atendimento/ativoDoUsuario/{id_cliente}/{id_usuario}": {
+            "get": {
+                "operationId": "AtendimentoController_ativosDoUsuario",
+                "parameters": [
+                    {
+                        "name": "id_cliente",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    },
+                    {
+                        "name": "id_usuario",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de atendimentos ativo do usuario no momento por cliente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/AtendimentoPendenteDto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "atendimento"
+                ]
+            }
+        },
+        "/atendimento/api/v1/login": {
+            "post": {
+                "operationId": "LoginController_login",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Resultado login",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoginResult"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "login"
+                ]
+            }
+        },
+        "/atendimento/api/v1/googleLogin": {
+            "post": {
+                "operationId": "LoginController_googleLogin",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/GoogleLoginDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Resultado login",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoginResult"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "atendimento-login"
+                ]
+            }
+        },
+        "/atendimento/api/v1/ws/callback": {
+            "post": {
+                "operationId": "WsController_wsCallback",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/WsCallbackDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Callback result",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoOperacao"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "ws"
+                ]
+            }
+        },
+        "/atendimento/api/v1/whatsapp/callbacks/onQrCode": {
+            "post": {
+                "operationId": "WhatsappController_callbackWhatsappOnQrCode",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/WhatsappCallbackOnQrCodeDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Callback para receber mensagens do whatsapp",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RetornoCallbackMensagem"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "mensagem"
+                ]
+            }
+        },
+        "/atendimento/api/v1/whatsapp/callbacks/onSessionReadyStatus": {
+            "post": {
+                "operationId": "WhatsappController_onSessionReadyStatus",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/WhatsappCallbackOnSessionReadyStatus"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Callback para receber notificacao de alteracao do status do dispositivo",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RetornoCallbackMensagem"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "mensagem"
+                ]
+            }
+        },
+        "/atendimento/api/v1/integracao/byCliente/{id_cliente}": {
+            "get": {
+                "operationId": "IntegracaoController_findByCliente",
+                "parameters": [
+                    {
+                        "name": "id_cliente",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de integrações",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/InfoIntegracao"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "integracao"
+                ]
+            }
+        },
+        "/atendimento/api/v1/integracao/insere": {
+            "post": {
+                "operationId": "IntegracaoController_insere",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/IntegracaoDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Resultado Inserção",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoInsercao"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "integracao"
+                ]
+            }
+        },
+        "/atendimento/api/v1/integracao/{id}": {
+            "put": {
+                "operationId": "IntegracaoController_atualiza",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/IntegracaoDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Resultado atualização",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ResultadoOperacao"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "integracao"
+                ]
+            },
+            "delete": {
+                "operationId": "IntegracaoController_exclui",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Resultado exclusão",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoOperacao"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "integracao"
+                ]
+            }
+        },
+        "/atendimento/api/v1/acao/executa": {
+            "post": {
+                "operationId": "AcaoController_executaAcao",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AcaoDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Callback result",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoOperacao"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "acao"
+                ]
+            }
+        },
+        "/atendimento/api/v1/n8n/{type}/{uuid}": {
+            "post": {
+                "operationId": "N8nController_callbackN8n",
+                "parameters": [
+                    {
+                        "name": "type",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "uuid",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "description": "JSON payload for n8n callback",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "additionalProperties": true,
+                                "example": {
+                                    "messages": [
+                                        {
+                                            "msgType": "TEXT",
+                                            "text": "Sample message content"
+                                        }
+                                    ],
+                                    "contact": {
+                                        "name": "Danilo",
+                                        "email": "danilolr@gmail.com",
+                                        "phone": "554888010170",
+                                        "docId": "8270935987",
+                                        "docType": "CPF"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Callback n8n"
+                    }
+                },
+                "tags": [
+                    "n8n"
+                ]
+            }
+        },
+        "/atendimento/api/v1/rag/byCliente/{id_cliente}": {
+            "get": {
+                "operationId": "RagController_findByCliente",
+                "parameters": [
+                    {
+                        "name": "id_cliente",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de Rags",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Rag"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "rag"
+                ]
+            }
+        },
+        "/atendimento/api/v1/rag/byId/{id}": {
+            "get": {
+                "operationId": "RagController_findById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Rag encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Rag"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "rag"
+                ]
+            }
+        },
+        "/atendimento/api/v1/rag/insere": {
+            "post": {
+                "operationId": "RagController_insere",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RagDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Resultado Inserção",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoInsercao"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "rag"
+                ]
+            }
+        },
+        "/atendimento/api/v1/rag/{id}": {
+            "put": {
+                "operationId": "RagController_atualiza",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RagDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Resultado atualização",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoOperacao"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "rag"
+                ]
+            },
+            "delete": {
+                "operationId": "RagController_exclui",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Resultado exclusão",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoOperacao"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "rag"
+                ]
+            }
+        },
+        "/atendimento/api/v1/rag/updateVectorStore/{id}": {
+            "put": {
+                "operationId": "RagController_updateVectorStore",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Resultado atualização",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoOperacao"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "rag"
+                ]
+            }
+        },
+        "/atendimento/api/v1/ragArquivo/byRag/{id}": {
+            "get": {
+                "operationId": "RagArquivoController_findByRag",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de Rags Arquivos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Rag"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "ragArquivo"
+                ]
+            }
+        },
+        "/atendimento/api/v1/ragArquivo/insere": {
+            "post": {
+                "operationId": "RagArquivoController_insere",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RagArquivoDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Resultado Inserção",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoInsercao"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "ragArquivo"
+                ]
+            }
+        },
+        "/atendimento/api/v1/ragArquivo/{id}": {
+            "put": {
+                "operationId": "RagArquivoController_atualiza",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RagArquivoDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Resultado atualização",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoOperacao"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "ragArquivo"
+                ]
+            },
+            "delete": {
+                "operationId": "RagArquivoController_exclui",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Resultado exclusão",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoOperacao"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "ragArquivo"
+                ]
+            }
+        },
+        "/atendimento/api/v1/usuario-ativo": {
+            "get": {
+                "operationId": "UsuarioAtivoController_listaUsuarioAtivo",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Callback result",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/InfoUsuarioAtivo"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "usuario-ativo"
+                ]
+            }
+        },
+        "/atendimento/api/v1/usuario-ativo/{id}/{ativo}": {
+            "put": {
+                "operationId": "UsuarioAtivoController_situacaoUsuarioAtivo",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    },
+                    {
+                        "name": "ativo",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Callback result",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "boolean"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "usuario-ativo"
+                ]
+            }
+        },
+        "/atendimento/api/v1/usuario-setor/{id_usuario}": {
+            "get": {
+                "operationId": "UsuarioSetorController_findAll",
+                "parameters": [
+                    {
+                        "name": "id_usuario",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de setores do usuário",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Setor"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "usuario-setor"
+                ]
+            }
+        },
+        "/atendimento/api/v1/usuario-setor": {
+            "post": {
+                "operationId": "UsuarioSetorController_insere",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UsuarioSetorUpdateDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Resultado Atualizacao",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResultadoInsercao"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "usuario-setor"
+                ]
+            }
+        }
+    },
+    "info": {
+        "title": "Atendimento API",
+        "description": "Atendimento API",
+        "version": "0.5.0",
+        "contact": {}
+    },
+    "tags": [],
+    "servers": [],
+    "components": {
+        "schemas": {
+            "CallbackOnTextMessageDto": {
+                "type": "object",
+                "properties": {
+                    "event": {
+                        "type": "string"
+                    },
+                    "deviceRef": {
+                        "type": "string"
+                    },
+                    "messageId": {
+                        "type": "string"
+                    },
+                    "from": {
+                        "type": "string"
+                    },
+                    "text": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "event",
+                    "deviceRef",
+                    "messageId",
+                    "from",
+                    "text"
+                ]
+            },
+            "RetornoCallbackMensagem": {
+                "type": "object",
+                "properties": {
+                    "ok": {
+                        "type": "boolean"
+                    },
+                    "erro": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "ok",
+                    "erro"
+                ]
+            },
+            "InfoFile": {
+                "type": "object",
+                "properties": {
+                    "event": {
+                        "type": "string"
+                    },
+                    "fullPath": {
+                        "type": "string"
+                    },
+                    "path": {
+                        "type": "string"
+                    },
+                    "metadata": {
+                        "type": "string"
+                    },
+                    "hash": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "event",
+                    "fullPath",
+                    "path",
+                    "metadata",
+                    "hash"
+                ]
+            },
+            "CallbackOnMediaMessageDto": {
+                "type": "object",
+                "properties": {
+                    "event": {
+                        "type": "string"
+                    },
+                    "deviceRef": {
+                        "type": "string"
+                    },
+                    "messageId": {
+                        "type": "string"
+                    },
+                    "from": {
+                        "type": "string"
+                    },
+                    "size": {
+                        "type": "number"
+                    },
+                    "mimeType": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string"
+                    },
+                    "file": {
+                        "$ref": "#/components/schemas/InfoFile"
+                    },
+                    "label": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "event",
+                    "deviceRef",
+                    "messageId",
+                    "from",
+                    "size",
+                    "mimeType",
+                    "type",
+                    "file",
+                    "label"
+                ]
+            },
+            "CallbackOnStatusUpdateDto": {
+                "type": "object",
+                "properties": {
+                    "event": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "deviceRef": {
+                        "type": "string"
+                    },
+                    "messageId": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "event",
+                    "status",
+                    "deviceRef",
+                    "messageId"
+                ]
+            },
+            "Cliente": {
+                "type": "object",
+                "properties": {
+                    "idCliente": {
+                        "type": "number"
+                    },
+                    "nomeCliente": {
+                        "type": "string"
+                    },
+                    "referencia": {
+                        "type": "string"
+                    },
+                    "ativo": {
+                        "type": "boolean"
+                    }
+                },
+                "required": [
+                    "idCliente",
+                    "nomeCliente",
+                    "referencia",
+                    "ativo"
+                ]
+            },
+            "ClienteDto": {
+                "type": "object",
+                "properties": {
+                    "referencia": {
+                        "type": "string"
+                    },
+                    "nomeCliente": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "referencia",
+                    "nomeCliente"
+                ]
+            },
+            "ResultadoInsercao": {
+                "type": "object",
+                "properties": {
+                    "ok": {
+                        "type": "boolean"
+                    },
+                    "codigoErro": {
+                        "type": "string"
+                    },
+                    "mensagem": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "number"
+                    }
+                },
+                "required": [
+                    "ok",
+                    "codigoErro",
+                    "mensagem",
+                    "id"
+                ]
+            },
+            "ClienteOnboardingDto": {
+                "type": "object",
+                "properties": {
+                    "referenciaCliente": {
+                        "type": "string"
+                    },
+                    "nomeCliente": {
+                        "type": "string"
+                    },
+                    "nomeUsuario": {
+                        "type": "string"
+                    },
+                    "emailUsuario": {
+                        "type": "string"
+                    },
+                    "senhaUsuario": {
+                        "type": "string"
+                    },
+                    "roles": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "required": [
+                    "referenciaCliente",
+                    "nomeCliente",
+                    "nomeUsuario",
+                    "emailUsuario",
+                    "senhaUsuario",
+                    "roles"
+                ]
+            },
+            "ResultadoOperacao": {
+                "type": "object",
+                "properties": {
+                    "ok": {
+                        "type": "boolean"
+                    },
+                    "codigoErro": {
+                        "type": "string"
+                    },
+                    "mensagem": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "ok",
+                    "codigoErro",
+                    "mensagem"
+                ]
+            },
+            "Integracao": {
+                "type": "object",
+                "properties": {
+                    "idIntegracao": {
+                        "type": "number"
+                    },
+                    "descIntegracao": {
+                        "type": "string"
+                    },
+                    "enderecoHttp": {
+                        "type": "string"
+                    },
+                    "referencia": {
+                        "type": "string"
+                    },
+                    "apiKey": {
+                        "type": "string"
+                    },
+                    "cliente": {
+                        "$ref": "#/components/schemas/Cliente"
+                    },
+                    "tipoServidor": {
+                        "type": "string"
+                    },
+                    "enderecoServidorApi": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "paramsServidorApi": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "ativo": {
+                        "type": "boolean"
+                    }
+                },
+                "required": [
+                    "idIntegracao",
+                    "descIntegracao",
+                    "enderecoHttp",
+                    "referencia",
+                    "apiKey",
+                    "cliente",
+                    "tipoServidor",
+                    "enderecoServidorApi",
+                    "paramsServidorApi",
+                    "ativo"
+                ]
+            },
+            "Setor": {
+                "type": "object",
+                "properties": {
+                    "idSetor": {
+                        "type": "number"
+                    },
+                    "descSetor": {
+                        "type": "string"
+                    },
+                    "cliente": {
+                        "$ref": "#/components/schemas/Cliente"
+                    },
+                    "ativo": {
+                        "type": "boolean"
+                    }
+                },
+                "required": [
+                    "idSetor",
+                    "descSetor",
+                    "cliente",
+                    "ativo"
+                ]
+            },
+            "CanalComunicacao": {
+                "type": "object",
+                "properties": {
+                    "idCanalComunicacao": {
+                        "type": "number"
+                    },
+                    "cliente": {
+                        "$ref": "#/components/schemas/Cliente"
+                    },
+                    "integracaoBot": {
+                        "$ref": "#/components/schemas/Integracao"
+                    },
+                    "refIntegracaoBot": {
+                        "type": "string"
+                    },
+                    "integracaoPagina": {
+                        "$ref": "#/components/schemas/Integracao"
+                    },
+                    "refIntegracaoPagina": {
+                        "type": "string"
+                    },
+                    "integracaoUsuario": {
+                        "$ref": "#/components/schemas/Integracao"
+                    },
+                    "refIntegracaoUsuario": {
+                        "type": "string"
+                    },
+                    "integracaoConselheiro": {
+                        "$ref": "#/components/schemas/Integracao"
+                    },
+                    "refIntegracaoConselheiro": {
+                        "type": "string"
+                    },
+                    "tipoCanal": {
+                        "type": "string"
+                    },
+                    "setor": {
+                        "$ref": "#/components/schemas/Setor"
+                    },
+                    "referenciaCanal": {
+                        "type": "string"
+                    },
+                    "descCanal": {
+                        "type": "string"
+                    },
+                    "token": {
+                        "type": "string"
+                    },
+                    "telefone": {
+                        "type": "string"
+                    },
+                    "parametro1": {
+                        "type": "string"
+                    },
+                    "parametro2": {
+                        "type": "string"
+                    },
+                    "modoIdentificacao": {
+                        "type": "string"
+                    },
+                    "mensagemTransferindoAtendente": {
+                        "type": "string"
+                    },
+                    "mensagemConversaEncerrada": {
+                        "type": "string"
+                    },
+                    "mensagemAtendimentoTransferido": {
+                        "type": "string"
+                    },
+                    "env": {
+                        "type": "string"
+                    },
+                    "ativo": {
+                        "type": "boolean"
+                    }
+                },
+                "required": [
+                    "idCanalComunicacao",
+                    "cliente",
+                    "integracaoBot",
+                    "refIntegracaoBot",
+                    "integracaoPagina",
+                    "refIntegracaoPagina",
+                    "integracaoUsuario",
+                    "refIntegracaoUsuario",
+                    "integracaoConselheiro",
+                    "refIntegracaoConselheiro",
+                    "tipoCanal",
+                    "setor",
+                    "referenciaCanal",
+                    "descCanal",
+                    "token",
+                    "telefone",
+                    "parametro1",
+                    "parametro2",
+                    "modoIdentificacao",
+                    "mensagemTransferindoAtendente",
+                    "mensagemConversaEncerrada",
+                    "mensagemAtendimentoTransferido",
+                    "env",
+                    "ativo"
+                ]
+            },
+            "UsuarioExterno": {
+                "type": "object",
+                "properties": {
+                    "idUsuarioExterno": {
+                        "type": "number"
+                    },
+                    "nomeUsuario": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "telefone": {
+                        "type": "string"
+                    },
+                    "documento": {
+                        "type": "string",
+                        "description": "Documento principal do usuario, CPF ou email por examplo"
+                    },
+                    "tipoDocumento": {
+                        "type": "string",
+                        "description": "Tipo do documento"
+                    },
+                    "identificadorCanal": {
+                        "type": "string",
+                        "description": "Identificador canal (telefone no whatsapp, id no telegram, uuid em chatpagina"
+                    },
+                    "refCliente": {
+                        "type": "string",
+                        "description": "Identificador unico no sistema do usuario, chave primária"
+                    },
+                    "cliente": {
+                        "$ref": "#/components/schemas/Cliente"
+                    },
+                    "atendimento": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Atendimento"
+                        }
+                    },
+                    "metadados": {
+                        "type": "string",
+                        "description": "Metadados do usuario, json"
+                    },
+                    "ativo": {
+                        "type": "boolean"
+                    }
+                },
+                "required": [
+                    "idUsuarioExterno",
+                    "nomeUsuario",
+                    "email",
+                    "telefone",
+                    "documento",
+                    "tipoDocumento",
+                    "identificadorCanal",
+                    "refCliente",
+                    "cliente",
+                    "metadados",
+                    "ativo"
+                ]
+            },
+            "Atendimento": {
+                "type": "object",
+                "properties": {
+                    "idAtendimento": {
+                        "type": "number"
+                    },
+                    "canalComunicacao": {
+                        "$ref": "#/components/schemas/CanalComunicacao"
+                    },
+                    "usuarioExterno": {
+                        "nullable": true,
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/UsuarioExterno"
+                            }
+                        ]
+                    },
+                    "dataHoraSolicitacao": {
+                        "format": "date-time",
+                        "type": "string"
+                    },
+                    "dataHoraInicio": {
+                        "format": "date-time",
+                        "type": "string"
+                    },
+                    "dataHoraFim": {
+                        "format": "date-time",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "identificadorUsuario": {
+                        "type": "string",
+                        "description": "Identificador usuário (telefone do whatsapp, chatid do telegram)",
+                        "example": "5548988010170"
+                    },
+                    "motivoEncerramento": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "comentario": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "resumo": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "cliente": {
+                        "$ref": "#/components/schemas/Cliente"
+                    },
+                    "ativo": {
+                        "type": "boolean"
+                    },
+                    "atendimentoAtendente": {
+                        "type": "array",
+                        "items": {
+                            "type": "array"
+                        }
+                    }
+                },
+                "required": [
+                    "idAtendimento",
+                    "canalComunicacao",
+                    "usuarioExterno",
+                    "dataHoraSolicitacao",
+                    "dataHoraInicio",
+                    "dataHoraFim",
+                    "status",
+                    "identificadorUsuario",
+                    "motivoEncerramento",
+                    "comentario",
+                    "resumo",
+                    "cliente",
+                    "ativo",
+                    "atendimentoAtendente"
+                ]
+            },
+            "UsuarioExternoDto": {
+                "type": "object",
+                "properties": {
+                    "nomeUsuario": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "telefone": {
+                        "type": "string"
+                    },
+                    "refCliente": {
+                        "type": "string"
+                    },
+                    "documento": {
+                        "type": "string"
+                    },
+                    "tipoDocumento": {
+                        "type": "string"
+                    },
+                    "identificadorCanal": {
+                        "type": "string"
+                    },
+                    "idCliente": {
+                        "type": "number"
+                    }
+                },
+                "required": [
+                    "nomeUsuario",
+                    "email",
+                    "telefone",
+                    "refCliente",
+                    "documento",
+                    "tipoDocumento",
+                    "identificadorCanal",
+                    "idCliente"
+                ]
+            },
+            "SetorDto": {
+                "type": "object",
+                "properties": {
+                    "descSetor": {
+                        "type": "string"
+                    },
+                    "idCliente": {
+                        "type": "number"
+                    }
+                },
+                "required": [
+                    "descSetor",
+                    "idCliente"
+                ]
+            },
+            "Menu": {
+                "type": "object",
+                "properties": {
+                    "idMenu": {
+                        "type": "number"
+                    },
+                    "tituloMenu": {
+                        "type": "string"
+                    },
+                    "link": {
+                        "type": "string"
+                    },
+                    "referencia": {
+                        "type": "string"
+                    },
+                    "ordem": {
+                        "type": "number"
+                    },
+                    "ativo": {
+                        "type": "boolean"
+                    }
+                },
+                "required": [
+                    "idMenu",
+                    "tituloMenu",
+                    "link",
+                    "referencia",
+                    "ordem",
+                    "ativo"
+                ]
+            },
+            "MenuDto": {
+                "type": "object",
+                "properties": {
+                    "tituloMenu": {
+                        "type": "string"
+                    },
+                    "link": {
+                        "type": "string"
+                    },
+                    "ordem": {
+                        "type": "number"
+                    },
+                    "referencia": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "tituloMenu",
+                    "link",
+                    "ordem",
+                    "referencia"
+                ]
+            },
+            "Example": {
+                "type": "object",
+                "properties": {
+                    "idExample": {
+                        "type": "number"
+                    },
+                    "text": {
+                        "type": "string"
+                    },
+                    "active": {
+                        "type": "boolean"
+                    }
+                },
+                "required": [
+                    "idExample",
+                    "text",
+                    "active"
+                ]
+            },
+            "Intent": {
+                "type": "object",
+                "properties": {
+                    "idIntent": {
+                        "type": "number"
+                    },
+                    "explanation": {
+                        "type": "string"
+                    },
+                    "code": {
+                        "type": "string"
+                    },
+                    "examples": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Example"
+                        }
+                    },
+                    "active": {
+                        "type": "boolean"
+                    }
+                },
+                "required": [
+                    "idIntent",
+                    "explanation",
+                    "code",
+                    "examples",
+                    "active"
+                ]
+            },
+            "InformacaoConselheiro": {
+                "type": "object",
+                "properties": {
+                    "idAdvisor": {
+                        "type": "number"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "contextDescription": {
+                        "type": "string"
+                    },
+                    "clientRef": {
+                        "type": "string"
+                    },
+                    "chat": {
+                        "type": "string"
+                    },
+                    "intents": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Intent"
+                        }
+                    },
+                    "active": {
+                        "type": "boolean"
+                    }
+                },
+                "required": [
+                    "idAdvisor",
+                    "name",
+                    "contextDescription",
+                    "clientRef",
+                    "chat",
+                    "intents",
+                    "active"
+                ]
+            },
+            "InfoDevice": {
+                "type": "object",
+                "properties": {
+                    "isReady": {
+                        "type": "boolean"
+                    },
+                    "hasQrCode": {
+                        "type": "boolean"
+                    },
+                    "qrCode": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "isReady",
+                    "hasQrCode",
+                    "qrCode"
+                ]
+            },
+            "CanalComunicacaoInfo": {
+                "type": "object",
+                "properties": {
+                    "canalComunicacao": {
+                        "$ref": "#/components/schemas/CanalComunicacao"
+                    },
+                    "infoDevice": {
+                        "$ref": "#/components/schemas/InfoDevice"
+                    }
+                },
+                "required": [
+                    "canalComunicacao",
+                    "infoDevice"
+                ]
+            },
+            "CanalComunicacaoDto": {
+                "type": "object",
+                "properties": {
+                    "idCliente": {
+                        "type": "number"
+                    },
+                    "tipoCanal": {
+                        "type": "string"
+                    },
+                    "referenciaCanal": {
+                        "type": "string"
+                    },
+                    "descCanal": {
+                        "type": "string"
+                    },
+                    "idSetor": {
+                        "type": "number"
+                    },
+                    "idIntegracaoBot": {
+                        "type": "number"
+                    },
+                    "refIntegracaoBot": {
+                        "type": "string"
+                    },
+                    "idIntegracaoPagina": {
+                        "type": "number"
+                    },
+                    "refIntegracaoPagina": {
+                        "type": "string"
+                    },
+                    "idIntegracaoUsuario": {
+                        "type": "number"
+                    },
+                    "refIntegracaoUsuario": {
+                        "type": "string"
+                    },
+                    "idIntegracaoConselheiro": {
+                        "type": "number"
+                    },
+                    "refIntegracaoConselheiro": {
+                        "type": "string"
+                    },
+                    "token": {
+                        "type": "string"
+                    },
+                    "telefone": {
+                        "type": "string"
+                    },
+                    "parametro1": {
+                        "type": "string"
+                    },
+                    "parametro2": {
+                        "type": "string"
+                    },
+                    "modoIdentificacao": {
+                        "type": "string"
+                    },
+                    "mensagemConversaEncerrada": {
+                        "type": "string"
+                    },
+                    "mensagemTransferindoAtendente": {
+                        "type": "string"
+                    },
+                    "env": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "idCliente",
+                    "tipoCanal",
+                    "referenciaCanal",
+                    "descCanal",
+                    "idSetor"
+                ]
+            },
+            "CanalComunicacaoIntegracaoDto": {
+                "type": "object",
+                "properties": {
+                    "idIntegracaoBot": {
+                        "type": "number",
+                        "nullable": true
+                    },
+                    "refIntegracaoBot": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "idIntegracaoPagina": {
+                        "type": "number",
+                        "nullable": true
+                    },
+                    "refIntegracaoPagina": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "idIntegracaoUsuario": {
+                        "type": "number",
+                        "nullable": true
+                    },
+                    "refIntegracaoUsuario": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "idIntegracaoConselheiro": {
+                        "type": "number",
+                        "nullable": true
+                    },
+                    "refIntegracaoConselheiro": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "mensagemAtendimentoTransferido": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "mensagemTransferindoAtendente": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "mensagemConversaEncerrada": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "modoIdentificacao": {
+                        "type": "string",
+                        "nullable": true
+                    }
+                },
+                "required": [
+                    "idIntegracaoBot",
+                    "refIntegracaoBot",
+                    "idIntegracaoPagina",
+                    "refIntegracaoPagina",
+                    "idIntegracaoUsuario",
+                    "refIntegracaoUsuario",
+                    "idIntegracaoConselheiro",
+                    "refIntegracaoConselheiro",
+                    "mensagemAtendimentoTransferido",
+                    "mensagemTransferindoAtendente",
+                    "mensagemConversaEncerrada",
+                    "modoIdentificacao"
+                ]
+            },
+            "Function": {
+                "type": "object",
+                "properties": {}
+            },
+            "Role": {
+                "type": "object",
+                "properties": {
+                    "idRole": {
+                        "type": "number"
+                    },
+                    "descRole": {
+                        "type": "string"
+                    },
+                    "role": {
+                        "type": "string"
+                    },
+                    "ativo": {
+                        "type": "boolean"
+                    },
+                    "usuarioRole": {
+                        "type": "array",
+                        "items": {
+                            "type": "array"
+                        }
+                    }
+                },
+                "required": [
+                    "idRole",
+                    "descRole",
+                    "role",
+                    "ativo",
+                    "usuarioRole"
+                ]
+            },
+            "UsuarioRole": {
+                "type": "object",
+                "properties": {
+                    "idUsuarioRole": {
+                        "type": "number"
+                    },
+                    "usuario": {
+                        "$ref": "#/components/schemas/Function"
+                    },
+                    "role": {
+                        "$ref": "#/components/schemas/Role"
+                    },
+                    "ativo": {
+                        "type": "boolean"
+                    }
+                },
+                "required": [
+                    "idUsuarioRole",
+                    "usuario",
+                    "role",
+                    "ativo"
+                ]
+            },
+            "UsuarioCliente": {
+                "type": "object",
+                "properties": {
+                    "idUsuarioCliente": {
+                        "type": "number"
+                    },
+                    "usuario": {
+                        "$ref": "#/components/schemas/Function"
+                    },
+                    "cliente": {
+                        "$ref": "#/components/schemas/Cliente"
+                    },
+                    "ativo": {
+                        "type": "boolean"
+                    }
+                },
+                "required": [
+                    "idUsuarioCliente",
+                    "usuario",
+                    "cliente",
+                    "ativo"
+                ]
+            },
+            "UsuarioSetor": {
+                "type": "object",
+                "properties": {
+                    "idUsuarioSetor": {
+                        "type": "number"
+                    },
+                    "usuario": {
+                        "$ref": "#/components/schemas/Function"
+                    },
+                    "setor": {
+                        "$ref": "#/components/schemas/Setor"
+                    },
+                    "ehAtendente": {
+                        "type": "boolean"
+                    },
+                    "ativo": {
+                        "type": "boolean"
+                    }
+                },
+                "required": [
+                    "idUsuarioSetor",
+                    "usuario",
+                    "setor",
+                    "ehAtendente",
+                    "ativo"
+                ]
+            },
+            "Usuario": {
+                "type": "object",
+                "properties": {
+                    "idUsuario": {
+                        "type": "number"
+                    },
+                    "identificador": {
+                        "type": "string"
+                    },
+                    "nomeUsuario": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "usuarioRole": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/UsuarioRole"
+                        }
+                    },
+                    "usuarioCliente": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/UsuarioCliente"
+                        }
+                    },
+                    "usuarioSetor": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/UsuarioSetor"
+                        }
+                    },
+                    "ativo": {
+                        "type": "boolean"
+                    }
+                },
+                "required": [
+                    "idUsuario",
+                    "identificador",
+                    "nomeUsuario",
+                    "email",
+                    "usuarioRole",
+                    "usuarioCliente",
+                    "usuarioSetor",
+                    "ativo"
+                ]
+            },
+            "UsuarioInsercaoDto": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "nomeUsuario": {
+                        "type": "string"
+                    },
+                    "metadata": {
+                        "type": "string"
+                    },
+                    "role": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "idCliente": {
+                        "type": "array",
+                        "items": {
+                            "type": "number"
+                        }
+                    }
+                },
+                "required": [
+                    "email",
+                    "password",
+                    "nomeUsuario",
+                    "metadata",
+                    "role",
+                    "idCliente"
+                ]
+            },
+            "UsuarioDto": {
+                "type": "object",
+                "properties": {
+                    "identificador": {
+                        "type": "string"
+                    },
+                    "nomeUsuario": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "identificador",
+                    "nomeUsuario",
+                    "email"
+                ]
+            },
+            "RoleDto": {
+                "type": "object",
+                "properties": {
+                    "descRole": {
+                        "type": "string"
+                    },
+                    "role": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "descRole",
+                    "role"
+                ]
+            },
+            "UsuarioClienteDto": {
+                "type": "object",
+                "properties": {
+                    "idUsuario": {
+                        "type": "number"
+                    },
+                    "idCliente": {
+                        "type": "number"
+                    }
+                },
+                "required": [
+                    "idUsuario",
+                    "idCliente"
+                ]
+            },
+            "AtendimentoDashboardDto": {
+                "type": "object",
+                "properties": {
+                    "atendimento": {
+                        "$ref": "#/components/schemas/Atendimento"
+                    },
+                    "canalComunicacao": {
+                        "$ref": "#/components/schemas/CanalComunicacao"
+                    },
+                    "usuarioExterno": {
+                        "$ref": "#/components/schemas/UsuarioExterno"
+                    }
+                },
+                "required": [
+                    "atendimento",
+                    "canalComunicacao",
+                    "usuarioExterno"
+                ]
+            },
+            "AtendimentoDto": {
+                "type": "object",
+                "properties": {
+                    "idCanalComunicacao": {
+                        "type": "number"
+                    },
+                    "idUsuarioExterno": {
+                        "type": "number"
+                    },
+                    "dataHoraSolicitacao": {
+                        "format": "date-time",
+                        "type": "string"
+                    },
+                    "dataHoraInicio": {
+                        "format": "date-time",
+                        "type": "string"
+                    },
+                    "dataHoraFim": {
+                        "format": "date-time",
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "motivoEncerramento": {
+                        "type": "string"
+                    },
+                    "comentario": {
+                        "type": "string"
+                    },
+                    "identificadorUsuario": {
+                        "type": "string",
+                        "description": "Identificador usuário (telefone do whatsapp, chatid do telegram)",
+                        "example": "5548988010170"
+                    },
+                    "idCliente": {
+                        "type": "number"
+                    }
+                },
+                "required": [
+                    "idCanalComunicacao",
+                    "idUsuarioExterno",
+                    "dataHoraSolicitacao",
+                    "dataHoraInicio",
+                    "dataHoraFim",
+                    "status",
+                    "motivoEncerramento",
+                    "comentario",
+                    "identificadorUsuario",
+                    "idCliente"
+                ]
+            },
+            "EncerraAtendimentoDto": {
+                "type": "object",
+                "properties": {
+                    "idAtendimento": {
+                        "type": "number"
+                    },
+                    "motivoEncerramento": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "idAtendimento"
+                ]
+            },
+            "MensagemDto": {
+                "type": "object",
+                "properties": {
+                    "tipo": {
+                        "type": "string"
+                    },
+                    "texto": {
+                        "type": "string",
+                        "nullable": true
+                    }
+                },
+                "required": [
+                    "tipo",
+                    "texto"
+                ]
+            },
+            "AtendimentoPendenteDto": {
+                "type": "object",
+                "properties": {
+                    "canalComunicacao": {
+                        "$ref": "#/components/schemas/CanalComunicacao"
+                    },
+                    "usuarioExterno": {
+                        "$ref": "#/components/schemas/UsuarioExterno"
+                    },
+                    "atendimento": {
+                        "$ref": "#/components/schemas/Atendimento"
+                    }
+                },
+                "required": [
+                    "canalComunicacao",
+                    "usuarioExterno",
+                    "atendimento"
+                ]
+            },
+            "LoginDto": {
+                "type": "object",
+                "properties": {
+                    "usuario": {
+                        "type": "string"
+                    },
+                    "senha": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "usuario",
+                    "senha"
+                ]
+            },
+            "LoginResult": {
+                "type": "object",
+                "properties": {
+                    "ok": {
+                        "type": "boolean"
+                    },
+                    "codigoErro": {
+                        "type": "string"
+                    },
+                    "mensagem": {
+                        "type": "string"
+                    },
+                    "token": {
+                        "type": "string"
+                    },
+                    "idUsuario": {
+                        "type": "number"
+                    },
+                    "nome": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "roles": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "cliente": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Cliente"
+                        }
+                    },
+                    "menu": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Menu"
+                        }
+                    }
+                },
+                "required": [
+                    "ok",
+                    "codigoErro",
+                    "mensagem",
+                    "token",
+                    "idUsuario",
+                    "nome",
+                    "email",
+                    "roles",
+                    "cliente",
+                    "menu"
+                ]
+            },
+            "GoogleLoginDto": {
+                "type": "object",
+                "properties": {
+                    "googleToken": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "googleToken"
+                ]
+            },
+            "WsCallbackDto": {
+                "type": "object",
+                "properties": {
+                    "uuid": {
+                        "type": "string"
+                    },
+                    "messageType": {
+                        "type": "string"
+                    },
+                    "payload": {
+                        "type": "object"
+                    }
+                },
+                "required": [
+                    "uuid",
+                    "messageType",
+                    "payload"
+                ]
+            },
+            "WhatsappCallbackOnQrCodeDto": {
+                "type": "object",
+                "properties": {
+                    "event": {
+                        "type": "string"
+                    },
+                    "deviceRef": {
+                        "type": "string"
+                    },
+                    "customerRef": {
+                        "type": "string"
+                    },
+                    "qrCode": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "event",
+                    "deviceRef",
+                    "customerRef",
+                    "qrCode"
+                ]
+            },
+            "WhatsappCallbackOnSessionReadyStatus": {
+                "type": "object",
+                "properties": {
+                    "deviceRef": {
+                        "type": "string"
+                    },
+                    "customerRef": {
+                        "type": "string"
+                    },
+                    "ready": {
+                        "type": "boolean"
+                    }
+                },
+                "required": [
+                    "deviceRef",
+                    "customerRef",
+                    "ready"
+                ]
+            },
+            "InfoServico": {
+                "type": "object",
+                "properties": {
+                    "referencia": {
+                        "type": "string"
+                    },
+                    "versao": {
+                        "type": "string"
+                    },
+                    "tipo": {
+                        "type": "string"
+                    },
+                    "conselheiro": {
+                        "type": "object"
+                    },
+                    "label": {
+                        "type": "string"
+                    },
+                    "apiConfig": {
+                        "type": "object"
+                    }
+                },
+                "required": [
+                    "referencia",
+                    "versao",
+                    "tipo"
+                ]
+            },
+            "InfoIntegracao": {
+                "type": "object",
+                "properties": {
+                    "integracao": {
+                        "$ref": "#/components/schemas/Integracao"
+                    },
+                    "servicos": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/InfoServico"
+                        }
+                    },
+                    "versao": {
+                        "type": "string"
+                    },
+                    "isOk": {
+                        "type": "boolean"
+                    }
+                },
+                "required": [
+                    "integracao",
+                    "servicos",
+                    "versao",
+                    "isOk"
+                ]
+            },
+            "IntegracaoDto": {
+                "type": "object",
+                "properties": {
+                    "idIntegracao": {
+                        "type": "number"
+                    },
+                    "descIntegracao": {
+                        "type": "string"
+                    },
+                    "enderecoHttp": {
+                        "type": "string"
+                    },
+                    "referencia": {
+                        "type": "string"
+                    },
+                    "apiKey": {
+                        "type": "string"
+                    },
+                    "tipoServidor": {
+                        "type": "string"
+                    },
+                    "idCliente": {
+                        "type": "number"
+                    }
+                },
+                "required": [
+                    "idIntegracao",
+                    "descIntegracao",
+                    "enderecoHttp",
+                    "referencia",
+                    "apiKey",
+                    "tipoServidor",
+                    "idCliente"
+                ]
+            },
+            "AcaoDto": {
+                "type": "object",
+                "properties": {
+                    "idAtendimento": {
+                        "type": "number"
+                    },
+                    "acao": {
+                        "type": "string"
+                    },
+                    "params": {
+                        "type": "object"
+                    }
+                },
+                "required": [
+                    "idAtendimento",
+                    "acao",
+                    "params"
+                ]
+            },
+            "Rag": {
+                "type": "object",
+                "properties": {
+                    "idRag": {
+                        "type": "number"
+                    },
+                    "descRag": {
+                        "type": "string"
+                    },
+                    "referencia": {
+                        "type": "string"
+                    },
+                    "caminhoWorkflowLoader": {
+                        "type": "string"
+                    },
+                    "cliente": {
+                        "$ref": "#/components/schemas/Cliente"
+                    },
+                    "atualizado": {
+                        "type": "boolean"
+                    },
+                    "ragArquivo": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/RagArquivo"
+                        }
+                    },
+                    "ativo": {
+                        "type": "boolean"
+                    }
+                },
+                "required": [
+                    "idRag",
+                    "descRag",
+                    "referencia",
+                    "caminhoWorkflowLoader",
+                    "cliente",
+                    "atualizado",
+                    "ragArquivo",
+                    "ativo"
+                ]
+            },
+            "Arquivo": {
+                "type": "object",
+                "properties": {
+                    "idArquivo": {
+                        "type": "number"
+                    },
+                    "nome": {
+                        "type": "string"
+                    },
+                    "hash": {
+                        "type": "string"
+                    },
+                    "tamanho": {
+                        "type": "number"
+                    },
+                    "metadata": {
+                        "type": "string"
+                    },
+                    "caminho": {
+                        "type": "string"
+                    },
+                    "mimeType": {
+                        "type": "string"
+                    },
+                    "contentText": {
+                        "type": "string"
+                    },
+                    "ativo": {
+                        "type": "boolean"
+                    }
+                },
+                "required": [
+                    "idArquivo",
+                    "nome",
+                    "hash",
+                    "tamanho",
+                    "metadata",
+                    "caminho",
+                    "mimeType",
+                    "contentText",
+                    "ativo"
+                ]
+            },
+            "RagArquivo": {
+                "type": "object",
+                "properties": {
+                    "idRagArquivo": {
+                        "type": "number"
+                    },
+                    "rag": {
+                        "$ref": "#/components/schemas/Rag"
+                    },
+                    "arquivo": {
+                        "$ref": "#/components/schemas/Arquivo"
+                    },
+                    "ativo": {
+                        "type": "boolean"
+                    }
+                },
+                "required": [
+                    "idRagArquivo",
+                    "rag",
+                    "arquivo",
+                    "ativo"
+                ]
+            },
+            "RagDto": {
+                "type": "object",
+                "properties": {
+                    "descRag": {
+                        "type": "string"
+                    },
+                    "referencia": {
+                        "type": "string"
+                    },
+                    "caminhoWorkflowLoader": {
+                        "type": "string"
+                    },
+                    "idCliente": {
+                        "type": "number"
+                    }
+                },
+                "required": [
+                    "descRag",
+                    "referencia",
+                    "caminhoWorkflowLoader",
+                    "idCliente"
+                ]
+            },
+            "RagArquivoDto": {
+                "type": "object",
+                "properties": {
+                    "idRag": {
+                        "type": "number"
+                    },
+                    "file": {
+                        "type": "file",
+                        "description": "File to upload"
+                    }
+                },
+                "required": [
+                    "idRag",
+                    "file"
+                ]
+            },
+            "InfoUsuarioAtivo": {
+                "type": "object",
+                "properties": {
+                    "usuario": {
+                        "$ref": "#/components/schemas/Usuario"
+                    },
+                    "metadados": {
+                        "type": "object"
+                    }
+                },
+                "required": [
+                    "usuario",
+                    "metadados"
+                ]
+            },
+            "UsuarioSetorUpdateInfoSetorDto": {
+                "type": "object",
+                "properties": {
+                    "idSetor": {
+                        "type": "number"
+                    },
+                    "ehAtendente": {
+                        "type": "boolean"
+                    }
+                },
+                "required": [
+                    "idSetor",
+                    "ehAtendente"
+                ]
+            },
+            "UsuarioSetorUpdateDto": {
+                "type": "object",
+                "properties": {
+                    "idUsuario": {
+                        "type": "number"
+                    },
+                    "setores": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/UsuarioSetorUpdateInfoSetorDto"
+                        }
+                    }
+                },
+                "required": [
+                    "idUsuario",
+                    "setores"
+                ]
+            }
+        }
+    }
+}

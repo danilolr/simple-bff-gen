@@ -1,0 +1,310 @@
+{
+    "openapi": "3.0.0",
+    "paths": {
+        "/log/api/v1/version": {
+            "get": {
+                "operationId": "AppController_getVersion",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Server version",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "version"
+                ]
+            }
+        },
+        "/log/api/v1/log": {
+            "post": {
+                "operationId": "AppController_postLog",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LogParams"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Insert result",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LogResult"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "log"
+                ]
+            }
+        },
+        "/log/api/v1/query": {
+            "post": {
+                "operationId": "AppController_getLogs",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LogQueryParams"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Answer",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LogQueryResult"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "log"
+                ]
+            }
+        },
+        "/log/api/v1/query/types": {
+            "get": {
+                "operationId": "AppController_getLogTypes",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Answer",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LogTypesResult"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "log"
+                ]
+            }
+        }
+    },
+    "info": {
+        "title": "Log API",
+        "description": "Log API",
+        "version": "0.0.9",
+        "contact": {}
+    },
+    "tags": [],
+    "servers": [],
+    "components": {
+        "schemas": {
+            "LogLevel": {
+                "type": "string",
+                "enum": [
+                    "INFO",
+                    "WARNING",
+                    "ERROR"
+                ]
+            },
+            "LogParams": {
+                "type": "object",
+                "properties": {
+                    "app": {
+                        "type": "string"
+                    },
+                    "group": {
+                        "type": "string"
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "metadata": {
+                        "type": "string"
+                    },
+                    "level": {
+                        "$ref": "#/components/schemas/LogLevel"
+                    },
+                    "trackId": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "app",
+                    "group",
+                    "message"
+                ]
+            },
+            "LogResult": {
+                "type": "object",
+                "properties": {
+                    "ok": {
+                        "type": "boolean"
+                    },
+                    "errorMessage": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "ok",
+                    "errorMessage"
+                ]
+            },
+            "LogQueryAppParam": {
+                "type": "object",
+                "properties": {
+                    "app": {
+                        "type": "string"
+                    },
+                    "groups": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "required": [
+                    "app"
+                ]
+            },
+            "LogQueryParams": {
+                "type": "object",
+                "properties": {
+                    "apps": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/LogQueryAppParam"
+                        }
+                    },
+                    "level": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/LogLevel"
+                        }
+                    },
+                    "dateTimeStart": {
+                        "format": "date-time",
+                        "type": "string"
+                    },
+                    "dateTimeEnd": {
+                        "format": "date-time",
+                        "type": "string"
+                    },
+                    "trackId": {
+                        "type": "string"
+                    }
+                }
+            },
+            "LogRecResult": {
+                "type": "object",
+                "properties": {
+                    "_id": {
+                        "type": "string"
+                    },
+                    "level": {
+                        "type": "string"
+                    },
+                    "app": {
+                        "type": "string"
+                    },
+                    "dateTime": {
+                        "format": "date-time",
+                        "type": "string"
+                    },
+                    "group": {
+                        "type": "string"
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "metadata": {
+                        "type": "object"
+                    },
+                    "trackId": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "_id",
+                    "level",
+                    "app",
+                    "dateTime",
+                    "group",
+                    "message",
+                    "metadata",
+                    "trackId"
+                ]
+            },
+            "LogQueryResult": {
+                "type": "object",
+                "properties": {
+                    "ok": {
+                        "type": "boolean"
+                    },
+                    "recs": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/LogRecResult"
+                        }
+                    }
+                },
+                "required": [
+                    "ok"
+                ]
+            },
+            "AppInfo": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "groups": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "required": [
+                    "name",
+                    "groups"
+                ]
+            },
+            "LogTypesResult": {
+                "type": "object",
+                "properties": {
+                    "ok": {
+                        "type": "boolean"
+                    },
+                    "apps": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/AppInfo"
+                        }
+                    }
+                },
+                "required": [
+                    "ok",
+                    "apps"
+                ]
+            }
+        }
+    }
+}

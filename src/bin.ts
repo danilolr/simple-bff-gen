@@ -3,14 +3,22 @@
 import { loadConfig } from './config-loader'
 import chalk from 'chalk'
 import { generateBffCode } from './generator'
+import path from 'path'
 
-const args = process.argv.slice(2);
-const customConfigPath = args[0]; 
+var args = process.argv.slice(2)
+args = args[0].split(" ")
+let customConfigPath = args[0]
+if (customConfigPath=="--debug") {
+    customConfigPath = args[1]
+}
+let rootDir = path.dirname(customConfigPath)
 
 console.log(chalk.blue.bold('🚀 Iniciando simple-bff-gen...'))
 
-const config = loadConfig(customConfigPath)
+const config = loadConfig(customConfigPath, rootDir)
 
 console.log(chalk.green(`✅ Configuração carregada! Processando ${config.endpoints.length} serviços...`))
 
-generateBffCode(config)
+generateBffCode(config, rootDir)
+
+console.log(chalk.green(`✅ Código gerado para ${config.endpoints.length} serviços.`))

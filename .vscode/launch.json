@@ -1,0 +1,22 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Debug BFF Generator",
+            "program": "${workspaceFolder}/dist/bin.js",
+            "preLaunchTask": "npm: build",
+            "args": [
+                "--debug /home/danilo/dev/demos/atendimento3-bff/bff-gen-config.json"
+            ],
+            "outFiles": [
+                "${workspaceFolder}/dist/**/*.js"
+            ],
+            "console": "integratedTerminal",
+            "skipFiles": [
+                "<node_internals>/**"
+            ]
+        }
+    ]
+}

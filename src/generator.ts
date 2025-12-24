@@ -21,13 +21,12 @@ async function buildDirStructure(baseDir: string, config: BffGenConfig, spec: Op
   }
 }
 
-export async function generateBffCode(config: BffGenConfig) {
-
+export async function generateBffCode(config: BffGenConfig, rootDir: string) {
   for (let endpoint of config.endpoints) {
     console.log(`Gerando código para endpoint: ${endpoint.name} (${endpoint.url})`)
     const spec = await loadOpenApiSpec(endpoint.url)
 
-    const baseDir = `${process.cwd()}/src/bff-gen`
+    const baseDir = `${rootDir}/src/bff-gen`
     await buildDirStructure(baseDir, config, spec)
 
     const file = new FileGenUtil(baseDir)

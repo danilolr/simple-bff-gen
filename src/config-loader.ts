@@ -4,13 +4,10 @@ import path from 'path';
 import chalk from 'chalk';
 import { BffGenConfig } from './types';
 
-export const loadConfig = (customPath?: string): BffGenConfig => {
-  // 1. Determina o caminho do arquivo
-  // Se o usuário passou um caminho, usa ele. Se não, procura o padrão na raiz.
+export const loadConfig = (customPath?: string, rootDir?: string): BffGenConfig => {
   const configFileName = customPath || 'bff-gen-config.json';
   
-  // process.cwd() pega a pasta onde o usuário rodou o comando (a raiz do projeto dele)
-  const fullPath = path.resolve(process.cwd(), configFileName);
+  const fullPath = path.resolve(rootDir || process.cwd(), configFileName);
 
   console.log(chalk.gray(`🔍 Procurando configuração em: ${fullPath}`));
 
@@ -24,7 +21,6 @@ export const loadConfig = (customPath?: string): BffGenConfig => {
     const fileContent = fs.readFileSync(fullPath, 'utf-8');
     const config = JSON.parse(fileContent) as BffGenConfig;
     
-    // Opcional: Aqui você poderia validar se os campos obrigatórios existem
     if (!config.endpoints || !Array.isArray(config.endpoints)) {
         throw new Error("O campo 'endpoints' é obrigatório e deve ser um array.");
     }

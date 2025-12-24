@@ -1,0 +1,32 @@
+{
+    "endpoints": [
+        {
+            "name": "atendimento",
+            "url": "http://atendimento.192.168.0.141.nip.io/atendimento/api/v1/swagger-json"
+        },
+        {
+            "name": "message",
+            "url": "http://atendimento.192.168.0.141.nip.io/message/api/v1/swagger-json"
+        },
+        {
+            "name": "llm",
+            "url": "http://atendimento.192.168.0.141.nip.io/llm/api/v1/swagger-json"
+        },
+        {
+            "name": "llm-intent",
+            "url": "http://atendimento.192.168.0.141.nip.io/llm-intent/api/v1/swagger-json"
+        },
+        {
+            "name": "log",
+            "url": "http://atendimento.192.168.0.141.nip.io/log/api/v1/swagger-json"
+        },
+        {
+            "name": "storage",
+            "url": "http://atendimento.192.168.0.141.nip.io/storage/api/v1/swagger-json"
+        },
+        {
+            "name": "auth",
+            "url": "http://atendimento.192.168.0.141.nip.io/auth/api/v1/swagger-json"
+        }
+    ]
+}

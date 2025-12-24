@@ -1,0 +1,736 @@
+{
+    "openapi": "3.0.0",
+    "paths": {
+        "/llm-intent/api/v1/version": {
+            "get": {
+                "operationId": "AppController_getVersion",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Server version",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "version"
+                ]
+            }
+        },
+        "/llm-intent/api/v1/inference": {
+            "post": {
+                "operationId": "AppController_runInference",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/IntentQuery"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Answer",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/IntentResult"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "inference"
+                ]
+            }
+        },
+        "/llm-intent/api/v1/advisor": {
+            "post": {
+                "operationId": "AdvisorController_insert",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AdvisorDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Answer",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OperationInsertResult"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "advisor"
+                ]
+            }
+        },
+        "/llm-intent/api/v1/advisor/{id}": {
+            "put": {
+                "operationId": "AdvisorController_update",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AdvisorDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Answer",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OperationInsertResult"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "advisor"
+                ]
+            }
+        },
+        "/llm-intent/api/v1/advisor/delete/{id}": {
+            "delete": {
+                "operationId": "AdvisorController_delete",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Answer",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OperationResult"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "advisor"
+                ]
+            }
+        },
+        "/llm-intent/api/v1/advisor/{name}": {
+            "get": {
+                "operationId": "AdvisorController_getAdvisor",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Advisor information",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Advisor"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "advisor"
+                ]
+            }
+        },
+        "/llm-intent/api/v1/advisor/byClient/{clientRef}": {
+            "get": {
+                "operationId": "AdvisorController_getAdvisorByClient",
+                "parameters": [
+                    {
+                        "name": "clientRef",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Advisor information",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Advisor"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "advisor"
+                ]
+            }
+        },
+        "/llm-intent/api/v1/intent": {
+            "post": {
+                "operationId": "IntentController_insert",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/IntentDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Answer",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OperationInsertResult"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "intent"
+                ]
+            }
+        },
+        "/llm-intent/api/v1/intent/{id}": {
+            "put": {
+                "operationId": "IntentController_update",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/IntentDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Answer",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OperationInsertResult"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "intent"
+                ]
+            }
+        },
+        "/llm-intent/api/v1/intent/delete/{id}": {
+            "delete": {
+                "operationId": "IntentController_delete",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Answer",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OperationResult"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "intent"
+                ]
+            }
+        },
+        "/llm-intent/api/v1/example": {
+            "post": {
+                "operationId": "ExampleController_insert",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ExampleDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Answer",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OperationInsertResult"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "example"
+                ]
+            }
+        },
+        "/llm-intent/api/v1/example/{id}": {
+            "put": {
+                "operationId": "ExampleController_update",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ExampleDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Answer",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OperationInsertResult"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "example"
+                ]
+            }
+        },
+        "/llm-intent/api/v1/example/delete/{id}": {
+            "delete": {
+                "operationId": "ExampleController_delete",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Answer",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OperationResult"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "example"
+                ]
+            }
+        }
+    },
+    "info": {
+        "title": "LLM Intent API",
+        "description": "LLM Intent description",
+        "version": "0.0.17",
+        "contact": {}
+    },
+    "tags": [],
+    "servers": [],
+    "components": {
+        "schemas": {
+            "ModelTypeEnum": {
+                "type": "string",
+                "enum": [
+                    "LLAMA33_70B",
+                    "LLAMA32_3B",
+                    "LLAMA32_1B",
+                    "LLAMA31_8B",
+                    "LLAMA3_70B_TOOL",
+                    "LLAMA3_8B_TOOL",
+                    "MIXTRAL_8X7B",
+                    "GEMMA_7B",
+                    "GEMMA2_9B",
+                    "LLAMA3_8B",
+                    "DEEP_SEEK_R1"
+                ]
+            },
+            "EngineTypeEnum": {
+                "type": "string",
+                "enum": [
+                    "GROQ",
+                    "OLLAMA"
+                ]
+            },
+            "Message": {
+                "type": "object",
+                "properties": {
+                    "role": {
+                        "type": "string",
+                        "example": "USER",
+                        "examples": [
+                            "USER",
+                            "ASSISTANT"
+                        ]
+                    },
+                    "text": {
+                        "type": "string",
+                        "example": "Quero falar com um atendente"
+                    }
+                },
+                "required": [
+                    "role",
+                    "text"
+                ]
+            },
+            "IntentQuery": {
+                "type": "object",
+                "properties": {
+                    "chat": {
+                        "type": "string",
+                        "example": "formfeed"
+                    },
+                    "model": {
+                        "$ref": "#/components/schemas/ModelTypeEnum"
+                    },
+                    "engine": {
+                        "$ref": "#/components/schemas/EngineTypeEnum"
+                    },
+                    "messages": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Message"
+                        }
+                    },
+                    "maxAttempts": {
+                        "type": "number",
+                        "default": 5,
+                        "example": 4
+                    }
+                },
+                "required": [
+                    "chat",
+                    "messages"
+                ]
+            },
+            "IntentAnswer": {
+                "type": "object",
+                "properties": {
+                    "intent": {
+                        "type": "string"
+                    },
+                    "probability": {
+                        "type": "number"
+                    }
+                },
+                "required": [
+                    "intent",
+                    "probability"
+                ]
+            },
+            "IntentResult": {
+                "type": "object",
+                "properties": {
+                    "ok": {
+                        "type": "boolean"
+                    },
+                    "errorMessage": {
+                        "type": "string"
+                    },
+                    "errorCode": {
+                        "type": "string"
+                    },
+                    "intents": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/IntentAnswer"
+                        }
+                    }
+                },
+                "required": [
+                    "ok",
+                    "errorMessage",
+                    "errorCode",
+                    "intents"
+                ]
+            },
+            "AdvisorDto": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "contextDescription": {
+                        "type": "string"
+                    },
+                    "clientRef": {
+                        "type": "string"
+                    },
+                    "chat": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "name",
+                    "contextDescription",
+                    "clientRef",
+                    "chat"
+                ]
+            },
+            "OperationInsertResult": {
+                "type": "object",
+                "properties": {
+                    "ok": {
+                        "type": "boolean"
+                    },
+                    "error": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "number"
+                    }
+                },
+                "required": [
+                    "ok",
+                    "error",
+                    "id"
+                ]
+            },
+            "OperationResult": {
+                "type": "object",
+                "properties": {
+                    "ok": {
+                        "type": "boolean"
+                    },
+                    "erro": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "ok",
+                    "erro"
+                ]
+            },
+            "Advisor": {
+                "type": "object",
+                "properties": {
+                    "idAdvisor": {
+                        "type": "number"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "contextDescription": {
+                        "type": "string"
+                    },
+                    "clientRef": {
+                        "type": "string"
+                    },
+                    "chat": {
+                        "type": "string"
+                    },
+                    "intents": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Intent"
+                        }
+                    },
+                    "active": {
+                        "type": "boolean"
+                    }
+                },
+                "required": [
+                    "idAdvisor",
+                    "name",
+                    "contextDescription",
+                    "clientRef",
+                    "chat",
+                    "intents",
+                    "active"
+                ]
+            },
+            "Example": {
+                "type": "object",
+                "properties": {
+                    "idExample": {
+                        "type": "number"
+                    },
+                    "text": {
+                        "type": "string"
+                    },
+                    "intent": {
+                        "$ref": "#/components/schemas/Intent"
+                    },
+                    "active": {
+                        "type": "boolean"
+                    }
+                },
+                "required": [
+                    "idExample",
+                    "text",
+                    "intent",
+                    "active"
+                ]
+            },
+            "Intent": {
+                "type": "object",
+                "properties": {
+                    "idIntent": {
+                        "type": "number"
+                    },
+                    "advisor": {
+                        "$ref": "#/components/schemas/Advisor"
+                    },
+                    "explanation": {
+                        "type": "string"
+                    },
+                    "code": {
+                        "type": "string"
+                    },
+                    "examples": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Example"
+                        }
+                    },
+                    "active": {
+                        "type": "boolean"
+                    }
+                },
+                "required": [
+                    "idIntent",
+                    "advisor",
+                    "explanation",
+                    "code",
+                    "examples",
+                    "active"
+                ]
+            },
+            "IntentDto": {
+                "type": "object",
+                "properties": {
+                    "idAdvisor": {
+                        "type": "number"
+                    },
+                    "explanation": {
+                        "type": "string"
+                    },
+                    "code": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "idAdvisor",
+                    "explanation",
+                    "code"
+                ]
+            },
+            "ExampleDto": {
+                "type": "object",
+                "properties": {
+                    "text": {
+                        "type": "string"
+                    },
+                    "idIntent": {
+                        "type": "number"
+                    }
+                },
+                "required": [
+                    "text",
+                    "idIntent"
+                ]
+            }
+        }
+    }
+}

@@ -1,0 +1,243 @@
+{
+    "openapi": "3.0.0",
+    "paths": {
+        "/llm/api/v1/version": {
+            "get": {
+                "operationId": "LlmController_getVersion",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Server version",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "version"
+                ]
+            }
+        },
+        "/llm/api/v1/inference": {
+            "post": {
+                "operationId": "LlmController_runInference",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/InferenceQuery"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Answer",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InferenceResult"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "inference"
+                ]
+            }
+        },
+        "/llm/api/v1/list": {
+            "post": {
+                "operationId": "LlmController_runListEngines",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Engine list",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "engine"
+                ]
+            }
+        }
+    },
+    "info": {
+        "title": "LLM API",
+        "description": "LLM API",
+        "version": "0.0.12",
+        "contact": {}
+    },
+    "tags": [],
+    "servers": [],
+    "components": {
+        "schemas": {
+            "ModelTypeEnum": {
+                "type": "string",
+                "enum": [
+                    "LLAMA33_70B",
+                    "LLAMA31_8B",
+                    "GPT_OSS_20B",
+                    "DEEP_SEEK_R1_70B",
+                    "GEMINI_20_FLASH",
+                    "GEMINI_20_FLASH_LITE"
+                ]
+            },
+            "EngineTypeEnum": {
+                "type": "string",
+                "enum": [
+                    "GROQ",
+                    "OLLAMA",
+                    "GEMINI"
+                ]
+            },
+            "Message": {
+                "type": "object",
+                "properties": {
+                    "role": {
+                        "type": "string",
+                        "example": "USER",
+                        "examples": [
+                            "USER",
+                            "ASSISTANT"
+                        ]
+                    },
+                    "text": {
+                        "type": "string",
+                        "example": "Why is the sky blue ?"
+                    },
+                    "toolCallId": {
+                        "type": "string"
+                    },
+                    "functionName": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "role",
+                    "text"
+                ]
+            },
+            "FunctionInfo": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "parameters": {
+                        "type": "object"
+                    }
+                },
+                "required": [
+                    "name",
+                    "description",
+                    "parameters"
+                ]
+            },
+            "ToolInfo": {
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "example": "function",
+                        "examples": [
+                            "function"
+                        ]
+                    },
+                    "function": {
+                        "$ref": "#/components/schemas/FunctionInfo"
+                    }
+                },
+                "required": [
+                    "type"
+                ]
+            },
+            "InferenceQuery": {
+                "type": "object",
+                "properties": {
+                    "model": {
+                        "$ref": "#/components/schemas/ModelTypeEnum"
+                    },
+                    "engine": {
+                        "$ref": "#/components/schemas/EngineTypeEnum"
+                    },
+                    "systemPrompt": {
+                        "type": "string"
+                    },
+                    "messages": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Message"
+                        }
+                    },
+                    "tools": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ToolInfo"
+                        }
+                    },
+                    "expectJson": {
+                        "type": "boolean",
+                        "default": false
+                    }
+                },
+                "required": [
+                    "messages",
+                    "expectJson"
+                ]
+            },
+            "InferenceResult": {
+                "type": "object",
+                "properties": {
+                    "ok": {
+                        "type": "boolean"
+                    },
+                    "errorMessage": {
+                        "type": "string"
+                    },
+                    "errorCode": {
+                        "type": "string"
+                    },
+                    "result": {
+                        "type": "object"
+                    },
+                    "toolCalls": {
+                        "type": "array",
+                        "items": {
+                            "type": "array"
+                        }
+                    },
+                    "timeInMs": {
+                        "type": "number"
+                    }
+                },
+                "required": [
+                    "ok",
+                    "errorMessage",
+                    "errorCode",
+                    "result",
+                    "timeInMs"
+                ]
+            }
+        }
+    }
+}
