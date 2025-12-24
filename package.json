@@ -1,0 +1,38 @@
+{
+  "name": "@custom-generators/simple-bff-gen",
+  "version": "0.0.1",
+  "main": "dist/index.js",
+  "bin": {
+    "simple-bff-gen": "./dist/bin.js"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc -w",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danilolr/simple-bff-gen.git"
+  },
+  "author": "Danilo Luiz Rheinheimer",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/danilolr/simple-bff-gen/issues"
+  },
+  "homepage": "https://github.com/danilolr/simple-bff-gen#readme",
+  "description": "",
+  "devDependencies": {
+    "@types/chalk": "^0.4.31",
+    "@types/node": "^25.0.3",
+    "@types/swagger-parser": "^4.0.3",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@apidevtools/swagger-parser": "^12.1.0",
+    "chalk": "^4.1.2",
+    "openapi-types": "^12.1.3"
+  }
+}
