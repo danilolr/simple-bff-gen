@@ -7,12 +7,20 @@ export interface ParamInfo {
     type: string
 }
 
+export interface ReturnTypeMetadata {
+    code: number
+    type: string
+    isArray: boolean
+    description?: string
+}
+
 export interface MethodMetadata {
     name: string
     httpMethod: string
     route: string
     tags: string[]
     parameters: ParamInfo[]
+    returnTypes: ReturnTypeMetadata[]
 }
 
 export interface ControllerMetadata {
@@ -61,6 +69,47 @@ export function createMetadata(spec: OpenAPI.Document): OpenApiMetadata | undefi
                     controllers.push(existing)
                 }
                 let methodName = operation!.operationId.substring(operation!.operationId.indexOf('_') + 1)
+                // Extract return types from responses
+                let returnTypes: ReturnTypeMetadata[] = []
+                if (operation.responses) {
+                    for (const [code, response] of Object.entries(operation.responses)) {
+                        const resp = response as any
+                        if (!resp) continue
+
+                        let type = 'void'
+                        let isArray = false
+
+                        // Check if response has content
+                        if (resp.content && resp.content['application/json']) {
+                            const schema = resp.content['application/json'].schema
+
+                            if (schema) {
+                                if (schema.type === 'array') {
+                                    isArray = true
+                                    if (schema.items?.$ref) {
+                                        type = extractRefName(schema.items.$ref) || 'any'
+                                    } else if (schema.items?.type) {
+                                        type = schema.items.type
+                                    } else {
+                                        type = 'any'
+                                    }
+                                } else if (schema.$ref) {
+                                    type = extractRefName(schema.$ref) || 'any'
+                                } else if (schema.type) {
+                                    type = schema.type
+                                }
+                            }
+                        }
+
+                        returnTypes.push({
+                            code: parseInt(code),
+                            type: type,
+                            isArray: isArray,
+                            description: resp.description
+                        })
+                    }
+                }
+
                 let methodInfo = {
                     name: methodName,
                     httpMethod: httpMethod,
@@ -69,7 +118,8 @@ export function createMetadata(spec: OpenAPI.Document): OpenApiMetadata | undefi
                     parameters: operation.parameters.map((param: any) => ({
                         name: param.name,
                         type: param.schema?.type || "any"
-                    })) || []
+                    })) || [],
+                    returnTypes: returnTypes
                 }
                 existing.methods.push(methodInfo)
             }

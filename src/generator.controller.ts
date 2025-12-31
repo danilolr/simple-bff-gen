@@ -2,6 +2,7 @@ import { OpenAPI } from "openapi-types";
 import { FileGenUtil } from "./utils/file.util"
 import { OpenApiMetadata } from "./metadata"
 import { fileName } from "./utils/generic.util"
+import { fixType } from "./utils/type.util";
 
 export function generateController(baseDir: string, endpoint: { name: string; url: string; }, metadata: OpenApiMetadata) {
     for (const controller of metadata.controllers) {
@@ -23,11 +24,12 @@ export function generateController(baseDir: string, endpoint: { name: string; ur
             fileController.addLine('class', `\n    @${typeAnnotation}('${method.route}')`)
             fileController.addLine('class', `    @ApiTags('${endpoint.name}-${method.tags[0]}')`)
             fileController.addLine('class', "    @ApiResponse({")
-            fileController.addLine('class', "        status: 200,")
-            fileController.addLine('class', "        description: 'Callback result',")
-            // fileController.addLine('class', "        type: ResultadoOperacao,")
+            fileController.addLine('class', `        status: ${method.returnTypes[0].code},`)
+            fileController.addLine('class', `        description: "${method.returnTypes[0].description}",`)
+            fileController.addLine('class', `        // ${JSON.stringify(method.returnTypes)}`)
+            fileController.addLine('class', `        type: ${fixType(method.returnTypes[0].type)},`)
             fileController.addLine('class', "    })")
-            fileController.addLine('class', `    async ${method.name}(): Promise<void> {    `)
+            fileController.addLine('class', `    async ${method.name}(): Promise<${method.returnTypes[0].type}>     {    `)
             fileController.addLine('class', `        var url = ${quote}${envName}${method.route}${quote}`)
             fileController.addLine('class', `        var resp = await this.needleService.chamadaPost(url, {`)
             fileController.addLine('class', `        })`)
