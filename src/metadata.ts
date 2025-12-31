@@ -3,8 +3,6 @@ import { OpenAPI } from "openapi-types"
 const extractRefName = (ref: string) => ref.split('/').pop()
 
 export interface ParamInfo {
-    name: string
-    type: string
 }
 
 export interface ReturnTypeMetadata {

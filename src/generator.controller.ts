@@ -5,6 +5,7 @@ import { fileName } from "./utils/generic.util"
 import { fixType } from "./utils/type.util";
 
 export function generateController(baseDir: string, endpoint: { name: string; url: string; }, metadata: OpenApiMetadata) {
+    const dontRepeat = new DontRepeat()
     for (const controller of metadata.controllers) {
         console.log(`Gerando controller: ${controller.name}`)
         const fileController = new FileGenUtil(baseDir + "/" + endpoint.name + "/controllers")
@@ -20,14 +21,16 @@ export function generateController(baseDir: string, endpoint: { name: string; ur
         for (const method of controller.methods) {
             const envName = '${' + `process.env.${endpoint.name.toUpperCase()}_URL` + '}'
 
+            dontRepeat.add(method.returnTypes[0].type)
+
             let typeAnnotation = methodTypeAnnotation(method.httpMethod)
             fileController.addLine('class', `\n    @${typeAnnotation}('${method.route}')`)
             fileController.addLine('class', `    @ApiTags('${endpoint.name}-${method.tags[0]}')`)
             fileController.addLine('class', "    @ApiResponse({")
             fileController.addLine('class', `        status: ${method.returnTypes[0].code},`)
             fileController.addLine('class', `        description: "${method.returnTypes[0].description}",`)
-            fileController.addLine('class', `        // ${JSON.stringify(method.returnTypes)}`)
             fileController.addLine('class', `        type: ${fixType(method.returnTypes[0].type)},`)
+            fileController.addLine('class', `        isArray: ${method.returnTypes[0].isArray},`)
             fileController.addLine('class', "    })")
             fileController.addLine('class', `    async ${method.name}(): Promise<${method.returnTypes[0].type}>     {    `)
             fileController.addLine('class', `        var url = ${quote}${envName}${method.route}${quote}`)
@@ -38,7 +41,12 @@ export function generateController(baseDir: string, endpoint: { name: string; ur
         }
 
         fileController.addLine('class', "}")
-        fileController.saveToFile(['header', 'class'], fileName(controller.name) + '.ts')
+
+        for (const type of dontRepeat.name) {
+            if (type == 'string' || type == "number") continue;
+            fileController.addLine('imports', `import { ${type} } from "../dto/${endpoint.name}.dto"`)
+        }
+        fileController.saveToFile(['header', 'imports', 'class'], fileName(controller.name) + '.ts')
     }
 }
 
@@ -79,5 +87,16 @@ function methodTypeAnnotation(httpMethod: string): string {
             return 'Patch';
         default:
             return 'Post'; // Default para Post se o método for desconhecido
+    }
+}
+
+export class DontRepeat {
+    public name = new Set<string>()
+
+    public add(name: string) {
+        if (this.name.has(name)) {
+            return
+        }
+        this.name.add(name)
     }
 }
