@@ -2,10 +2,13 @@ import fs from 'fs'
 import path from 'path'
 import { BffGenConfig } from './types'
 import { loadOpenApiSpec } from './open-api-loader'
-import { FileGenUtil } from './utils/file.util';
-import { OpenAPI } from 'openapi-types';
-import { getSchemas } from './schema-helper';
-import { generateDto } from './generator.dto';
+import { FileGenUtil } from './utils/file.util'
+import { OpenAPI } from 'openapi-types'
+import { generateDto } from './generator.dto'
+import { generateController } from './generator.controller'
+import { createMetadata } from './metadata'
+import { generateModule } from './generator.module'
+import { generateServiceUtil } from './generator.service.util'
 
 async function buildDirStructure(baseDir: string, config: BffGenConfig, spec: OpenAPI.Document) {
   if (!fs.existsSync(baseDir)) {
@@ -25,6 +28,12 @@ export async function generateBffCode(config: BffGenConfig, rootDir: string) {
   for (let endpoint of config.endpoints) {
     console.log(`Gerando código para endpoint: ${endpoint.name} (${endpoint.url})`)
     const spec = await loadOpenApiSpec(endpoint.url)
+    const metadata = createMetadata(spec)
+    if (!metadata) {
+      console.log(`Nenhum metadado extraído para o endpoint: ${endpoint.name}`)
+      continue;
+    }
+    console.log(`Metadados extraídos: ${JSON.stringify(metadata, null, 2)}`)
 
     const baseDir = `${rootDir}/src/bff-gen`
     await buildDirStructure(baseDir, config, spec)
@@ -32,33 +41,11 @@ export async function generateBffCode(config: BffGenConfig, rootDir: string) {
     const file = new FileGenUtil(baseDir)
     file.saveToFile([], 'config.json')
     console.log(`Título da API: ${spec.info.title}`)
-    const readme = new FileGenUtil(baseDir + "/" + endpoint.name,)
-    if (spec.paths) {
-      for (const [route, methods] of Object.entries(spec.paths)) {
-        if (!methods) continue;
 
-        // Itera sobre os métodos (get, post, put...)
-        for (const [method, operation] of Object.entries(methods)) {
-          // Aqui você tem acesso a:
-          // operation.operationId (ex: getUserById)
-          // operation.parameters (inputs)
-          // operation.responses (outputs)
-
-          const opId = (operation as any).operationId || `${method}${route.replace(/\//g, '_')}`;
-
-          readme.addLine('readme', `
-// Rota: ${method.toUpperCase()} ${route}
-// Descrição: ${(operation as any).summary || ''}
-export const ${opId} = async (params) => {
-  // Sua lógica de geração de BFF aqui...
-  // Ex: return axios.${method}('${route}', params);
-};`)
-        }
-      }
-    }
-    readme.saveToFile(['readme'], 'README.md')
-
-    generateDto(baseDir, endpoint, spec)    
+    generateDto(baseDir, endpoint, metadata!)
+    generateController(baseDir, endpoint, metadata!)
+    generateModule(baseDir, endpoint, metadata!)
+    generateServiceUtil(baseDir, endpoint, metadata!)
   }
 }
 

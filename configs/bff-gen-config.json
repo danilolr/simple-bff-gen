@@ -1,0 +1,8 @@
+{
+    "endpoints": [
+        {
+            "name": "auth",
+            "url": "/Users/danilo/dev/simple-bff-gen/configs/atendimento-local/auth.json"
+        }
+    ]
+}
