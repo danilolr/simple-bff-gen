@@ -1,36 +1,51 @@
-import { OpenApiMetadata } from "./metadata";
+import { DtoDef, OpenApiMetadata } from "./metadata"
 import { FileGenUtil } from "./utils/file.util"
-import { fixType } from "./utils/type.util";
+import { fixType, isPrimitive } from "./utils/type.util"
+
+
+function generateDtoClass(schema: DtoDef, dto: FileGenUtil, dependencies: Map<string, string[]>) {
+    console.log(`Gerando DTO: ${schema.name}`)
+
+    dto.addLine('dto', `export class ${schema.name} {\n`)
+
+    for (const prop of schema.properties) {
+        let infoType = ''
+        if (prop.isArray) {
+            infoType = `{isArray: true, type: () => ${fixType(prop.type)}}`
+        }
+        dto.addLine('dto', `  @ApiProperty(${infoType})`)
+        dto.addLine('dto', `  ${prop.name}: ${prop.type}${prop.isArray ? '[]' : ''}\n`);
+    }
+
+    dto.addLine('dto', `}\n`);
+}
 
 export function generateDto(baseDir: string, endpoint: { name: string; url: string; }, metadata: OpenApiMetadata) {
-    const dto = new FileGenUtil(baseDir + "/" + endpoint.name + "/dto")
+    const dtoFile = new FileGenUtil(baseDir + "/" + endpoint.name + "/dto")
 
-    dto.addLine('header', 'import { ApiProperty } from \'@nestjs/swagger\'')
+    var dependencies = new Map<string, string[]>()
+
+    dtoFile.addLine('header', 'import { ApiProperty } from \'@nestjs/swagger\'')
 
     for (const enumDef of metadata.enums) {
-        dto.addLine('dto', `export enum ${enumDef.name} {`)
+        dtoFile.addLine('dto', `export enum ${enumDef.name} {`)
         for (const value of enumDef.values) {
-            dto.addLine('dto', `  ${value},`)
+            dtoFile.addLine('dto', `  ${value},`)
         }
-        dto.addLine('dto', `}\n`)
+        dtoFile.addLine('dto', `}\n`)
     }
 
-    for (const schema of metadata.dtos) {
-        console.log(`Gerando DTO: ${schema.name}`)
-
-        dto.addLine('dto', `export class ${schema.name} {\n`)
-
-        for (const prop of schema.properties) {
-            let infoType = ''
-            if (prop.isArray) {
-                infoType = `{isArray: true, type: () => ${fixType(prop.type)}}`
+    for (const dto of metadata.dtos) {
+        for (const prop of dto.properties) {
+            if (!isPrimitive(prop.type)) {
+                dependencies.get(dto.name)!.push(prop.type)
             }
-            dto.addLine('dto', `  @ApiProperty(${infoType})`)
-            dto.addLine('dto', `  ${prop.name}: ${prop.type}\n`);
         }
-
-        dto.addLine('dto', `}\n`);
     }
 
-    dto.saveToFile(['header', 'dto'], endpoint.name + '.dto.ts')
+    for (const dto of metadata.dtos) {
+        generateDtoClass(dto, dtoFile, dependencies)
+    }
+
+    dtoFile.saveToFile(['header', 'dto'], endpoint.name + '.dto.ts')
 }

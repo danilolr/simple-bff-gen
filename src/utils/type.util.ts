@@ -7,3 +7,7 @@ export function fixType(type: string): string {
     }
     return type
 }
+
+export function isPrimitive(type: string): boolean {
+    return type === 'string' || type === 'number' || type === 'boolean' || type === 'object' || type === 'array'
+}

@@ -2,7 +2,7 @@ import { OpenAPI } from "openapi-types";
 import { FileGenUtil } from "./utils/file.util"
 import { OpenApiMetadata } from "./metadata"
 import { fileName } from "./utils/generic.util"
-import { fixType } from "./utils/type.util";
+import { fixType, isPrimitive } from "./utils/type.util";
 
 export function generateController(baseDir: string, endpoint: { name: string; url: string; }, metadata: OpenApiMetadata) {
     const dontRepeat = new DontRepeat()
@@ -10,7 +10,7 @@ export function generateController(baseDir: string, endpoint: { name: string; ur
         console.log(`Gerando controller: ${controller.name}`)
         const fileController = new FileGenUtil(baseDir + "/" + endpoint.name + "/controllers")
 
-        fileController.addLine('header', "import { Body, Controller, Post, Get, Delete, Put } from '@nestjs/common'")
+        fileController.addLine('header', "import { Body, Param, Controller, Post, Get, Delete, Put } from '@nestjs/common'")
         fileController.addLine('header', "import { ApiResponse, ApiTags } from '@nestjs/swagger'")
         fileController.addLine('header', "import { NeedleService } from '../../needle.service'")
 
@@ -19,11 +19,25 @@ export function generateController(baseDir: string, endpoint: { name: string; ur
         fileController.addLine('class', `\n    constructor(private readonly needleService: NeedleService) {}`)
         const quote = '`'
         for (const method of controller.methods) {
-            const envName = '${' + `process.env.${endpoint.name.toUpperCase()}_URL` + '}'
+            const envName = '${' + `process.env.${endpoint.name.toUpperCase().replace("-", "_")}_URL` + '}'
 
             dontRepeat.add(method.returnTypes[0].type)
 
             let typeAnnotation = methodTypeAnnotation(method.httpMethod)
+            let paramsString = ''
+            for (var param of method.parameters) {
+                if (param.in == "body") {
+                    paramsString += `@Body() ${param.name}: ${param.type}, `
+                    dontRepeat.add(param.type)
+                } else if (param.in == "path") {
+                    paramsString += `@Param("${param.name}") ${param.name}: ${param.type}, `
+                    dontRepeat.add(param.type)
+                } else if (param.in == "query") {
+                    paramsString += `@Query("${param.name}") ${param.name}: ${param.type}, `
+                    dontRepeat.add(param.type)
+                }
+            }
+
             fileController.addLine('class', `\n    @${typeAnnotation}('${method.route}')`)
             fileController.addLine('class', `    @ApiTags('${endpoint.name}-${method.tags[0]}')`)
             fileController.addLine('class', "    @ApiResponse({")
@@ -32,7 +46,8 @@ export function generateController(baseDir: string, endpoint: { name: string; ur
             fileController.addLine('class', `        type: ${fixType(method.returnTypes[0].type)},`)
             fileController.addLine('class', `        isArray: ${method.returnTypes[0].isArray},`)
             fileController.addLine('class', "    })")
-            fileController.addLine('class', `    async ${method.name}(): Promise<${method.returnTypes[0].type}>     {    `)
+            // fileController.addLine('class', `// ${JSON.stringify(method.parameters)}`)
+            fileController.addLine('class', `    async ${method.name}(${paramsString}): Promise<${method.returnTypes[0].type}>     {    `)
             fileController.addLine('class', `        var url = ${quote}${envName}${method.route}${quote}`)
             fileController.addLine('class', `        var resp = await this.needleService.chamadaPost(url, {`)
             fileController.addLine('class', `        })`)
@@ -43,7 +58,7 @@ export function generateController(baseDir: string, endpoint: { name: string; ur
         fileController.addLine('class', "}")
 
         for (const type of dontRepeat.name) {
-            if (type == 'string' || type == "number") continue;
+            if (isPrimitive(type)) continue;
             fileController.addLine('imports', `import { ${type} } from "../dto/${endpoint.name}.dto"`)
         }
         fileController.saveToFile(['header', 'imports', 'class'], fileName(controller.name) + '.ts')

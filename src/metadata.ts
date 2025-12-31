@@ -3,6 +3,11 @@ import { OpenAPI } from "openapi-types"
 const extractRefName = (ref: string) => ref.split('/').pop()
 
 export interface ParamInfo {
+    name: string
+    type: string
+    in: string
+    required: boolean
+    description?: string
 }
 
 export interface ReturnTypeMetadata {
@@ -108,15 +113,81 @@ export function createMetadata(spec: OpenAPI.Document): OpenApiMetadata | undefi
                     }
                 }
 
+                // Extract parameters
+                let parameters: ParamInfo[] = []
+                if (operation.parameters && Array.isArray(operation.parameters)) {
+                    for (const param of operation.parameters) {
+                        const p = param as any
+                        if (!p) continue
+
+                        let type = 'any'
+
+                        // Extract type from schema
+                        if (p.schema) {
+                            if (p.schema.type === 'array') {
+                                if (p.schema.items?.$ref) {
+                                    type = extractRefName(p.schema.items.$ref) + '[]' || 'any[]'
+                                } else if (p.schema.items?.type) {
+                                    type = p.schema.items.type + '[]'
+                                } else {
+                                    type = 'any[]'
+                                }
+                            } else if (p.schema.$ref) {
+                                type = extractRefName(p.schema.$ref) || 'any'
+                            } else if (p.schema.type) {
+                                type = p.schema.type
+                            }
+                        }
+
+                        parameters.push({
+                            name: p.name || 'unknown',
+                            type: type,
+                            in: p.in || 'query',
+                            required: p.required || false,
+                            description: p.description
+                        })
+                    }
+                }
+
+                // Also check for requestBody
+                if (operation.requestBody) {
+                    const reqBody = operation.requestBody as any
+                    if (reqBody.content && reqBody.content['application/json']) {
+                        const schema = reqBody.content['application/json'].schema
+                        let type = 'any'
+
+                        if (schema) {
+                            if (schema.type === 'array') {
+                                if (schema.items?.$ref) {
+                                    type = extractRefName(schema.items.$ref) + '[]' || 'any[]'
+                                } else if (schema.items?.type) {
+                                    type = schema.items.type + '[]'
+                                } else {
+                                    type = 'any[]'
+                                }
+                            } else if (schema.$ref) {
+                                type = extractRefName(schema.$ref) || 'any'
+                            } else if (schema.type) {
+                                type = schema.type
+                            }
+                        }
+
+                        parameters.push({
+                            name: 'body',
+                            type: type,
+                            in: 'body',
+                            required: reqBody.required || false,
+                            description: reqBody.description
+                        })
+                    }
+                }
+
                 let methodInfo = {
                     name: methodName,
                     httpMethod: httpMethod,
                     route: route,
                     tags: operation.tags || [],
-                    parameters: operation.parameters.map((param: any) => ({
-                        name: param.name,
-                        type: param.schema?.type || "any"
-                    })) || [],
+                    parameters: parameters,
                     returnTypes: returnTypes
                 }
                 existing.methods.push(methodInfo)
